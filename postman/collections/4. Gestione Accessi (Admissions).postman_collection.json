@@ -1,0 +1,112 @@
+{
+  "info": {
+    "_postman_id": "9f112e2d-5e44-41fa-b691-ec61b21ed75b",
+    "name": "4. Gestione Accessi (Admissions)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "10404108",
+    "_collection_link": "https://go.postman.co/collection/10404108-9f112e2d-5e44-41fa-b691-ec61b21ed75b?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "📋 4.1 Lista Accessi Attivi",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/admissions",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "admissions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "➕ 4.2 Dettaglio Accesso (Triage)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/admissions/:id",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "admissions",
+            ":id"
+          ],
+          "variable": [
+            {
+              "key": "id",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "➕ 4.3 Nuovo Accesso (Triage)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"Luigi\",\n  \"cognome\": \"Verdi\",\n  \"dataNascita\": \"1990-01-01\",\n  \"codiceFiscale\": \"VRDLGU90A01H501K\",\n  \n  \"patologiaCode\": \"C01\",           // Deve esistere in /resources/pathologies\n  \"codiceColore\": \"AZZURRO\",        // Deve esistere in /resources/triage-colors\n  \"modalitaArrivoCode\": \"AUT\",      // Deve esistere in /resources/arrival-modes\n  \"noteTriage\": \"Trauma lieve alla caviglia\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/admissions",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "admissions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "🔄 4.4 Cambio Stato",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nuovoStato\": \"OBI\" // Valori ammessi: ATT, VIS, OBI, RIC, DIM\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/admissions/:id/status",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "admissions",
+            ":id",
+            "status"
+          ],
+          "variable": [
+            {
+              "key": "id",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

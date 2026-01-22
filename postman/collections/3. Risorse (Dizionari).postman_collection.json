@@ -1,0 +1,65 @@
+{
+  "info": {
+    "_postman_id": "840515b9-24d4-49fa-8a50-ddc8229911c3",
+    "name": "3. Risorse (Dizionari)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "10404108",
+    "_collection_link": "https://go.postman.co/collection/10404108-840515b9-24d4-49fa-8a50-ddc8229911c3?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "🎨 3.1 Elenco Colori Triage",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/resources/triage-colors",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "resources",
+            "triage-colors"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "🩺 3.2 Elenco Patologie",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/resources/pathologies",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "resources",
+            "pathologies"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "🚑 3.3 Elenco Modalità Arrivo",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/resources/arrival-modes",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "resources",
+            "arrival-modes"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

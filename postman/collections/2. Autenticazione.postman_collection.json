@@ -1,0 +1,45 @@
+{
+  "info": {
+    "_postman_id": "09f405c0-4473-4f9c-bb74-5239790e4e8f",
+    "name": "2. Autenticazione",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "10404108",
+    "_collection_link": "https://go.postman.co/collection/10404108-09f405c0-4473-4f9c-bb74-5239790e4e8f?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "🔐 Login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"medico\",\n  \"password\": \"1234\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/auth/login",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseURL",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}

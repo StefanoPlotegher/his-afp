@@ -1,0 +1,45 @@
+{
+  "info": {
+    "_postman_id": "b3e1e419-3abf-4f2e-b654-b63ed1935f8e",
+    "name": "5. Osservabilità & System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "10404108",
+    "_collection_link": "https://go.postman.co/collection/10404108-b3e1e419-3abf-4f2e-b654-b63ed1935f8e?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Health Status",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/health",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "health"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Metriche",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/metrics",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "metrics"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
