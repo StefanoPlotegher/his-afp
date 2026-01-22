@@ -59,6 +59,9 @@ his-afp
 5. Avviare i container Docker: `docker-compose up -d --build`
 6. Accedere al backend API su `http://localhost:3000`
 
+# Documentazione API
+La documentazione completa delle API è disponibile nel file [docs/API.md](docs/API.md).
+
 # Contribuire
 - Aprire issue per bug o feature
 - Creare branch per la feature: `git checkout -b feat/nome-feature`
