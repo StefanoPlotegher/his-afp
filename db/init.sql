@@ -107,8 +107,7 @@ ON CONFLICT (code) DO NOTHING;
 INSERT INTO arrival_modes (code, description) VALUES
     ('AUT', 'Autonomo'),
     ('AMB', 'Ambulanza 118'),
-    ('ELI', 'Elisoccorso'),
-    ('INT', 'Interno Ospedale')
+    ('ELI', 'Elisoccorso')
 ON CONFLICT (code) DO NOTHING;
 
 -- Utenti
