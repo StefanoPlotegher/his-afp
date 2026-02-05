@@ -1,16 +1,16 @@
 <div class="mb-4 p-8">
-    <p-card header="Simple Card">
-        <h2>Nome: {{ nome }}</h2>
-        <h2>Paziente: {{ paziente().nome }}</h2>
-        <h2>Paziente: {{ paziente() | json }}</h2>
-        
-        <br>
-        <p class="m-0">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque
-            quas!
+    <p-card 
+        class="w-2xs"
+        header="{{paziente().cognome}} {{paziente().nome}}"
+        subheader="{{paziente().braccialetto}} - {{paziente().codiceColore}}"
+    >
+        <p >
+            <b>{{ paziente().patologia }}</b>
+            <br>
+            Note Triage: {{ paziente().note }}
         </p>
-        <br>
-        <p-button label="Cambia Nome" (onClick)="cambiaNome()"></p-button>
-
+        <ng-template #footer>
+            <p-button label="Dimetti"></p-button>
+        </ng-template>
     </p-card>
 </div>
