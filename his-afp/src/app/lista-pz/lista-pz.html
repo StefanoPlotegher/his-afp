@@ -1,14 +1,14 @@
-<!--<his-card-pz/>-->
-<!--
-@for(<var> of <array>){
-
-}
--->
-@for (pz of listaPz(); track pz.braccialetto) {
-  <h1>{{ pz.cognome }} {{ pz.nome }}</h1>
-  <h2>{{ pz.braccialetto }} - {{ pz.patologia }}</h2>
-  <hr>
-} @empty {
-  <h1>Nessun paziente in attesa</h1>
-}
-
+<div
+  class="flex flex-wrap flex-row gap-4 p-4"
+>
+  @for (paziente of listaPz(); track paziente.braccialetto) {
+    <his-card-pz [borderTop]="false" [paziente]="paziente"/>
+  } @empty {
+    <h1>Nessun paziente in attesa</h1>
+  }
+  @for (paziente of listaPz(); track paziente.braccialetto) {
+    <his-card-pz [borderTop]="true" [paziente]="paziente"/>
+  } @empty {
+    <h1>Nessun paziente in attesa</h1>
+  }
+</div>
