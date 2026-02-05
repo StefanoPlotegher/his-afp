@@ -16,7 +16,7 @@ interface Paziente {
 
 @Component({
   selector: 'his-card-pz',
-  imports: [CardModule, ButtonModule, JsonPipe],
+  imports: [CardModule, ButtonModule],
   templateUrl: './card-pz.html',
   styleUrl: './card-pz.scss',
 })
