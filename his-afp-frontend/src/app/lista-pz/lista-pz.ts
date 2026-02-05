@@ -22,7 +22,7 @@ export class ListaPz {
     cognome: 'Milik',
     braccialetto: '124',
     eta: 31,
-    codiceColore: 'ROSSO',
+    codiceColore: 'AZZURRO',
     note: 'Tutte la patoologie',
     patologia: 'C19'},
     {id: '21',
