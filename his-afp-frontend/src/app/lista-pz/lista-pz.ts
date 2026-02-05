@@ -32,6 +32,14 @@ export class ListaPz {
     eta: 97,
     codiceColore: 'ROSSO',
     note: 'Cenere',
+    patologia: 'C19'},
+    {id: '20',
+    nome: 'Diego',
+    cognome: 'Maradona',
+    braccialetto: '168',
+    eta: 97,
+    codiceColore: 'BIANCO',
+    note: 'Napoli',
     patologia: 'C19'}
   ]);
 
