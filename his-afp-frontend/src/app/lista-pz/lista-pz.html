@@ -1,3 +1,16 @@
-<p>lista-pz works!</p>
-<his-card-pz/>
+<!--<his-card-pz/>-->
 
+<!--{{ listaPZ()[0].nome }}-->
+<!--
+@for(<var> of >array>){
+
+}
+-->
+@for (pz of listaPZ(); track pz.braccialetto){
+    <h1>{{pz.cognome}} {{pz.nome}}</h1>
+    <h2>{{ pz.braccialetto }}</h2>
+    <hr>
+    <his-card-pz/>
+}@empty {
+    <h1>Nessun paziente trovato</h1>
+}
