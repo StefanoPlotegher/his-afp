@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { CardPz, Paziente } from '../card-pz/card-pz';
 
 @Component({
@@ -8,7 +8,7 @@ import { CardPz, Paziente } from '../card-pz/card-pz';
   styleUrl: './lista-pz.scss',
 })
 export class ListaPz {
-  listaPZ = signal<Paziente[]>([
+  listaPz = signal<Paziente[]>([
     {id: '23',
     nome: 'Stefano',
     cognome: 'Plotegher',
@@ -34,5 +34,10 @@ export class ListaPz {
     note: 'Cenere',
     patologia: 'C19'}
   ]);
+
+
+  // come filtrare le liste
+  filteredList = computed(() => {
+    return this.listaPz().filter(p => p.codiceColore === 'ROSSO')})
 
 }

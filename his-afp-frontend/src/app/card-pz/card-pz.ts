@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { JsonPipe } from '@angular/common';
@@ -21,8 +21,7 @@ export interface Paziente {
   styleUrl: './card-pz.scss',
 })
 export class CardPz {
-  nome: string = 'pietro';
-  paziente = signal<Paziente>({
+  paziente2 = signal<Paziente>({
     id: '23',
     nome: 'Stefano',
     cognome: 'Plotegher',
@@ -33,9 +32,6 @@ export class CardPz {
     patologia: 'C19'
   });
 
-  cambiaNome(){
-    this.nome = "Gian";
+  paziente = input.required<Paziente>();
 
-    
-  }
 }

@@ -6,11 +6,10 @@
 
 }
 -->
-@for (pz of listaPZ(); track pz.braccialetto){
-    <h1>{{pz.cognome}} {{pz.nome}}</h1>
-    <h2>{{ pz.braccialetto }}</h2>
-    <hr>
-    <his-card-pz/>
+@for (pz of listaPz(); track pz.braccialetto){
+    <his-card-pz
+        [paziente]="pz"
+    />
 }@empty {
     <h1>Nessun paziente trovato</h1>
 }
