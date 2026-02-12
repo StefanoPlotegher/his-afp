@@ -1,8 +1,9 @@
-import { Component, computed, model, signal } from '@angular/core';
+import { Component, computed, inject, model, signal } from '@angular/core';
 import { CardPz, Paziente } from '../card-pz/card-pz';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { Button } from "primeng/button";
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'his-lista-pz',
@@ -56,6 +57,18 @@ export class ListaPz {
   //filtraggio per nome (filtrade in base se la stringa nel'input è presente  nel nome del Paziente)
   filteredList = computed(() => {
     return this.listaPz().filter((pz: Paziente) => pz.nome.toLowerCase().includes(this.nomePaziente().toLowerCase())
-    )})
+    )});
 
+
+  readonly #http = inject(HttpClient);
+
+  constructor(){
+    this.getHealthStatus();
+  }
+  
+  getHealthStatus(){
+    this.#http.get('http://localhost:3000/health').subscribe((res) => {
+      console.log(res);
+    });
+  };
 }
