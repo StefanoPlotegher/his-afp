@@ -5,6 +5,33 @@
 >
 <p>Nome PZ: {{ nomePaziente() || 'none' }}</p>
 <p>Pazienti presenti in PS: {{ filteredList().length }}</p>
+<hr>
+
+@let srv = healthStatus()?.service;
+@let db = healthStatus()?.database;
+@let uptime = healthStatus()?.uptime;
+
+<ul>
+  <li>Service:
+    <p-tag
+      [severity]="srv == undefined ? 'danger' : 'success'"
+      value="{{ srv || 'KO' }}"
+    />
+  </li>
+  <li>Database:
+    <p-tag
+      [severity]="db == undefined ? 'danger' : 'success'"
+      value="{{ db || 'KO' }}"
+    />
+  </li>
+  <li>Uptime:
+    <p-tag
+      [severity]="uptime == undefined ? 'danger' : 'success'"
+      value="{{ uptime || 'KO' }}"
+    />
+  </li>
+</ul>
+
 <!--
 -   quadrata: Padre -> Figlio
 -   rotonda: Figlio -> Padre

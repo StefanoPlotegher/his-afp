@@ -1,12 +1,25 @@
-import { Component, computed, model, signal } from '@angular/core';
+import { Component, computed, inject, model, signal } from '@angular/core';
 import { CardPz, Paziente } from '../card-pz/card-pz';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
-import { Button } from 'primeng/button';
+import { HttpClient } from '@angular/common/http';
+import { ButtonModule } from 'primeng/button';
+import { TagModule } from 'primeng/tag';
+
+interface Response {
+  status: string;
+  data: HealthStatus;
+}
+
+interface HealthStatus {
+  service: string;
+  database: string;
+  uptime: number;
+}
 
 @Component({
   selector: 'his-lista-pz',
-  imports: [CardPz, InputTextModule, FormsModule, Button],
+  imports: [InputTextModule, FormsModule, ButtonModule, CardPz, TagModule],
   templateUrl: './lista-pz.html',
   styleUrl: './lista-pz.scss',
 })
@@ -65,13 +78,29 @@ export class ListaPz {
     },
   ]);
 
+  healthStatus = signal<HealthStatus | null>(null);
+
   filteredList = computed(() => {
     return this.listaPz().filter((pz: Paziente) =>
       pz.nome.toLowerCase().includes(this.nomePaziente().toLowerCase()),
     );
   });
+  readonly #http = inject(HttpClient);
+
+  constructor() {
+    this.getHealthStatus();
+  }
 
   editNomePaziente(nomePZ: string) {
     this.nomePaziente.set(nomePZ);
+  }
+
+  getHealthStatus() {
+    this.#http.get<Response>('http://localhost:3000/health').subscribe((res) => {
+      console.table(res.data);
+      console.log('DB status:', res.data.database);
+
+      this.healthStatus.set(res.data);
+    });
   }
 }
