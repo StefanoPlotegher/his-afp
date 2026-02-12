@@ -4,10 +4,22 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { Button } from "primeng/button";
 import { HttpClient } from '@angular/common/http';
+import { TagModule } from 'primeng/tag';
+
+interface Response {
+  status: string;
+  data: HealthStatus;
+}
+
+interface HealthStatus {
+  service: string;
+  database: string;
+  uptime: number;
+}
 
 @Component({
   selector: 'his-lista-pz',
-  imports: [CardPz, InputTextModule, FormsModule, Button],
+  imports: [CardPz, InputTextModule, FormsModule, Button, TagModule],
   templateUrl: './lista-pz.html',
   styleUrl: './lista-pz.scss',
 })
@@ -50,14 +62,16 @@ export class ListaPz {
     patologia: 'C19'}
   ]);
 
+  healthStatus = signal<HealthStatus | null>(null);
+
   editNomePaziente(nomePZ: string){
     this.nomePaziente.set(nomePZ);
   }
   // come filtrare le liste
   //filtraggio per nome (filtrade in base se la stringa nel'input è presente  nel nome del Paziente)
   filteredList = computed(() => {
-    return this.listaPz().filter((pz: Paziente) => pz.nome.toLowerCase().includes(this.nomePaziente().toLowerCase())
-    )});
+    return this.listaPz().filter((pz: Paziente) => pz.nome.toLowerCase().includes(this.nomePaziente().toLowerCase()))
+  });
 
 
   readonly #http = inject(HttpClient);
@@ -67,8 +81,11 @@ export class ListaPz {
   }
   
   getHealthStatus(){
-    this.#http.get('http://localhost:3000/health').subscribe((res) => {
-      console.log(res);
+    this.#http.get<Response>('http://localhost:3000/health').subscribe((res) => {
+      console.table(res.data);
+      console.log("DB status: ", res.data.database);
+
+      this.healthStatus.set(res.data);
     });
-  };
+  }
 }
