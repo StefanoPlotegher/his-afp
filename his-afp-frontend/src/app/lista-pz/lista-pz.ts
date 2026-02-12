@@ -2,10 +2,11 @@ import { Component, computed, model, signal } from '@angular/core';
 import { CardPz, Paziente } from '../card-pz/card-pz';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
+import { Button } from "primeng/button";
 
 @Component({
   selector: 'his-lista-pz',
-  imports: [CardPz, InputTextModule, FormsModule],
+  imports: [CardPz, InputTextModule, FormsModule, Button],
   templateUrl: './lista-pz.html',
   styleUrl: './lista-pz.scss',
 })
@@ -48,8 +49,10 @@ export class ListaPz {
     patologia: 'C19'}
   ]);
 
+  editNomePaziente(nomePZ: string){
+    this.nomePaziente.set(nomePZ);
+  }
   // come filtrare le liste
-
   //filtraggio per nome (filtrade in base se la stringa nel'input è presente  nel nome del Paziente)
   filteredList = computed(() => {
     return this.listaPz().filter((pz: Paziente) => pz.nome.toLowerCase().includes(this.nomePaziente().toLowerCase())

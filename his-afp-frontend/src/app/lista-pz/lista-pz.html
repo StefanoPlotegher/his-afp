@@ -20,6 +20,10 @@ class="flex flex-wrap flex-row gap-4 p-4">
     <his-card-pz
         [paziente]="pz"
     />
+    <p-button
+        label="Edit"
+        (click)="editNomePaziente(pz.nome)"
+    />
 }@empty {
     <h1>Nessun paziente in attesa</h1>
 }
