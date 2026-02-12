@@ -6,16 +6,22 @@
 
 }
 -->
+
+<input
+    pInputText
+    type="text"
+    [(ngModel)]="nomePaziente"
+>
 <div
 class="flex flex-wrap flex-row gap-4 p-4">
 
 
-@for (pz of listaPz(); track pz.braccialetto){
+@for (pz of filteredList(); track pz.braccialetto){
     <his-card-pz
         [paziente]="pz"
     />
 }@empty {
-    <h1>Nessun paziente trovato</h1>
+    <h1>Nessun paziente in attesa</h1>
 }
 
 </div>
