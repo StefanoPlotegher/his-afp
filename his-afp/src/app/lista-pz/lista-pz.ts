@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
+import { catchError, of } from 'rxjs';
 
 interface Response<T> {
   status: string;
@@ -96,11 +97,20 @@ export class ListaPz {
   }
 
   getHealthStatus() {
-    this.#http.get<Response<HealthStatus>>('http://localhost:3000/health').subscribe((res) => {
-      console.table(res.data);
-      console.log('DB status:', res.data.database);
+    this.#http
+      .get<Response<HealthStatus>>('http://localhost:3000/health')
+      .pipe(
+        catchError((error) => {
+          // TODO: Non lo abbiamo visto a lezione
+          console.error('Error fetching health status:', error.error.data);
+          return of(error.error as Response<HealthStatus>); // Return the error response as an observable to keep the stream alive
+        }),
+      )
+      .subscribe((res) => {
+        console.table(res);
+        console.log('DB status:', res.data.database);
 
-      this.healthStatus.set(res.data);
-    });
+        this.healthStatus.set(res?.data);
+      });
   }
 }

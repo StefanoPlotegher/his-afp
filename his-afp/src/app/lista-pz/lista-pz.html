@@ -11,6 +11,7 @@
 @let db = healthStatus()?.database;
 @let uptime = healthStatus()?.uptime;
 
+<!-- TODO: Da sistemare-->
 <ul>
   <li>Service:
     <p-tag
@@ -20,7 +21,7 @@
   </li>
   <li>Database:
     <p-tag
-      [severity]="db == undefined ? 'danger' : 'success'"
+      [severity]="db === 'DISCONNECTED' ? 'danger' : 'success'"
       value="{{ db || 'KO' }}"
     />
   </li>
