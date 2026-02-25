@@ -6,16 +6,12 @@ import { HttpClient } from '@angular/common/http';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { catchError, of } from 'rxjs';
+import { SystemStatus } from '../core/SystemStatus/system-status';
+import { HealthStatus } from '../core/SystemStatus/HealthStatus.model';
 
 interface Response<T> {
   status: string;
   data: T;
-}
-
-interface HealthStatus {
-  service: string;
-  database: string;
-  uptime: number;
 }
 
 @Component({
@@ -79,7 +75,7 @@ export class ListaPz {
     },
   ]);
 
-  healthStatus = signal<HealthStatus | null>(null);
+  healthStatus = inject(SystemStatus).statoAPI;
 
   filteredList = computed(() => {
     return this.listaPz().filter((pz: Paziente) =>
@@ -110,7 +106,7 @@ export class ListaPz {
         console.table(res);
         console.log('DB status:', res.data.database);
 
-        this.healthStatus.set(res?.data);
+        //this.healthStatus.set(res?.data);
       });
   }
 }
