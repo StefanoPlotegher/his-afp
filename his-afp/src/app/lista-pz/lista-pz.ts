@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { SystemStatus } from '../core/SystemStatus/system-status';
+import { StatoAPI } from '../ui/stato-api/stato-api';
 
 interface Response<T> {
   status: string;
@@ -13,7 +14,7 @@ interface Response<T> {
 
 @Component({
   selector: 'his-lista-pz',
-  imports: [InputTextModule, FormsModule, ButtonModule, CardPz, TagModule],
+  imports: [InputTextModule, FormsModule, ButtonModule, CardPz, TagModule, StatoAPI],
   templateUrl: './lista-pz.html',
   styleUrl: './lista-pz.scss',
 })
