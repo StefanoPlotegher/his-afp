@@ -5,21 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { Button } from "primeng/button";
 import { HttpClient } from '@angular/common/http';
 import { TagModule } from 'primeng/tag';
+import { SystemStatus } from '../core/SystemStatus/system-status';
+import { HealthStatus } from '../core/SystemStatus/HealthStatus.model';
+import { StatoAPI } from "../ui/stato-api/stato-api";
 
-interface Response {
-  status: string;
-  data: HealthStatus;
-}
 
-interface HealthStatus {
-  service: string;
-  database: string;
-  uptime: number;
-}
 
 @Component({
   selector: 'his-lista-pz',
-  imports: [CardPz, InputTextModule, FormsModule, Button, TagModule],
+  imports: [CardPz, InputTextModule, FormsModule, Button, TagModule, StatoAPI],
   templateUrl: './lista-pz.html',
   styleUrl: './lista-pz.scss',
 })
@@ -62,7 +56,7 @@ export class ListaPz {
     patologia: 'C19'}
   ]);
 
-  healthStatus = signal<HealthStatus | null>(null);
+  healthStatus = inject(SystemStatus).statoAPI;
 
   editNomePaziente(nomePZ: string){
     this.nomePaziente.set(nomePZ);
@@ -75,17 +69,6 @@ export class ListaPz {
 
 
   readonly #http = inject(HttpClient);
-
-  constructor(){
-    this.getHealthStatus();
-  }
   
-  getHealthStatus(){
-    this.#http.get<Response>('http://localhost:3000/health').subscribe((res) => {
-      console.table(res.data);
-      console.log("DB status: ", res.data.database);
 
-      this.healthStatus.set(res.data);
-    });
-  }
 }
