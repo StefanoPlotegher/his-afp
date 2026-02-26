@@ -1,11 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { HealthStatus, healthStatusMock } from './HealthStatus.model';  
+import { APIResponse } from '../models/Response.model';
 
-interface APIResponse <T> {
-  status: string;
-  data: T;
-}
 
 @Injectable({
   providedIn: 'root',

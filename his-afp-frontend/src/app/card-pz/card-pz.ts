@@ -2,17 +2,7 @@ import { Component, input, signal } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { JsonPipe } from '@angular/common';
-
-export interface Paziente {
-  id: string;
-  nome: string;
-  cognome: string;
-  braccialetto: string;
-  eta: number;
-  codiceColore: string;
-  note: string;
-  patologia: string;
-}
+import { Paziente } from '../core/PatientManager/Pazienti.model';
 
 @Component({
   selector: 'his-card-pz',
