@@ -12,7 +12,8 @@
     type="text"
     [(ngModel)]="nomePaziente"
 >
-<p>Pazienti presenti in PS: {{ filteredList().length }}</p>
+<p>Pazienti presenti in PS: {{ listaPz().length }}</p>
+<p>Nome del PZ: {{ nomePaziente() || 'none' }}</p>
 <hr>
 
 <his-stato-api/>
@@ -21,7 +22,7 @@
 <div
 class="flex flex-wrap flex-row gap-4 p-4">
 
-@for (pz of filteredList(); track pz.braccialetto){
+@for (pz of listaPz(); track pz.braccialetto){
     <his-card-pz
         [paziente]="pz"
     />

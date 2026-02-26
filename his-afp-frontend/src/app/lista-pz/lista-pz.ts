@@ -1,14 +1,11 @@
-import { Component, computed, inject, model, signal } from '@angular/core';
+import { Component, computed, effect, inject, model, signal } from '@angular/core';
 import { CardPz } from '../card-pz/card-pz';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { Button } from "primeng/button";
-import { HttpClient } from '@angular/common/http';
 import { TagModule } from 'primeng/tag';
 import { SystemStatus } from '../core/SystemStatus/system-status';
-import { HealthStatus } from '../core/SystemStatus/HealthStatus.model';
 import { StatoAPI } from "../ui/stato-api/stato-api";
-import { Paziente } from '../core/PatientManager/Pazienti.model';
 import { PatientManager } from '../core/PatientManager/patient-manager';
 
 
@@ -28,17 +25,16 @@ export class ListaPz {
 
   healthStatus = inject(SystemStatus).statoAPI;
 
+  constructor(){
+    effect(() => {
+      this.PatientManager.filterByName(this.nomePaziente());
+    });
+  }
+
   editNomePaziente(nomePZ: string){
     this.nomePaziente.set(nomePZ);
+    this.PatientManager.filterByName(this.nomePaziente());
   }
-  // come filtrare le liste
-  //filtraggio per nome (filtrade in base se la stringa nel'input è presente  nel nome del Paziente)
-  filteredList = computed(() => {
-    return this.listaPz().filter((pz: Paziente) => pz.nome.toLowerCase().includes(this.nomePaziente().toLowerCase()))
-  });
-
-
-  readonly #http = inject(HttpClient);
   
 
 }
