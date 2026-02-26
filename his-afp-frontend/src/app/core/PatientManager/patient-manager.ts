@@ -9,13 +9,15 @@ import { APIResponse } from '../models/Response.model';
 export class PatientManager {
   #http = inject(HttpClient);
   #listaPZ = signal<Paziente[]>([]);
-  #listaPzFiltered = this.#listaPZ;
+  #listaPzFiltered = signal<Paziente[]>(this.#listaPZ());
   listaPZ = this.#listaPzFiltered.asReadonly();
 
   constructor(){
     this.fetchPazienti();
   }
 
+
+  //fetch dei pazienti http
   public fetchPazienti(){
     this.#http.get<APIResponse<PazienteDTO[]>>('http://localhost:3000/admissions').subscribe({
       next: (res) => {
@@ -29,7 +31,8 @@ export class PatientManager {
     )
   }
 
-    public mapPazienteDTOtoPaziente(pz: PazienteDTO):Paziente{
+  //mapping da DTO a Paziente
+  public mapPazienteDTOtoPaziente(pz: PazienteDTO):Paziente{
     return {
       id: pz.id.toString(),
       nome: pz.nome,
@@ -42,6 +45,8 @@ export class PatientManager {
     }
   }
 
+
+  //calcolo dell'età partendo dalla data
   public calcolaEta (dataNascita: string): number {
     const oggi = new Date();
     const nascita = new Date(dataNascita);
@@ -53,6 +58,8 @@ export class PatientManager {
     return eta;
   }
 
+
+  //filtro per nome o cognome
   public filterByName(name: string){
     //filtro per nome della lista pazienti
     const filtered = this.#listaPZ().filter((p) => {
