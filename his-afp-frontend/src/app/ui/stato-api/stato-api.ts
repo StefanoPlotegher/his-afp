@@ -10,5 +10,8 @@ import { Tag } from "primeng/tag";
 })
 export class StatoAPI {
 
-    healthStatus = inject(SystemStatus).statoAPI;
+  //inject dell'intero servizio systemStatus in readonly perchè non devo modificare i dati quindi non serve una veriabile locale
+  readonly systemStatus = inject(SystemStatus);
+  //inject dello stato API (componente core) in una variabile locale
+  healthStatus = inject(SystemStatus).statoAPI;
 }

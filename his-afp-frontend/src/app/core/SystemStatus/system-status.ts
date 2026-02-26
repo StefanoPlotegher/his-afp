@@ -22,10 +22,13 @@ export class SystemStatus {
    }
 
   public fetchStatoAPI(){
+    //chiamata http
     this.#http.get<APIResponse<HealthStatus>>("http://localhost:3000/health").subscribe({
+      //risposta positiva
       next:(res) => {
         this.#statoAPI.set(res.data);
       },
+      //risposta di errore
       error: (err) => {},
     })
   }

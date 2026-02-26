@@ -1,7 +1,9 @@
-@let srv = healthStatus().service;
-@let db = healthStatus().database;
-@let uptime = healthStatus().uptime;
+@let srv = systemStatus.statoAPI().service;
+@let db = systemStatus.statoAPI().database;
+@let uptime = systemStatus.statoAPI().uptime;
 
+
+//lista dello stato dell'API con logica che cambia il colore in base se è buona o non va
 <ul>
     <li>Service: 
         <p-tag 
