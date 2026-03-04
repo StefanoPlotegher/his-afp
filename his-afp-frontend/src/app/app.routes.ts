@@ -18,6 +18,10 @@ export const routes: Routes = [
         component: ModificaPz
     },
     {
+        path: 'modifica-pz:id',
+        component: ModificaPz
+    },
+    {
         path: 'stato-servizi',
         component: StatoServizi
     },
