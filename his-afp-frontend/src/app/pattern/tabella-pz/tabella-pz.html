@@ -1,1 +1,20 @@
-<p>tabella-pz works!</p>
+<input
+    pInputText
+    type="text"
+    [(ngModel)]="nomePaziente"
+>
+
+<p>Pazienti presenti in PS: {{ PatientManager.listaPZ().length }}</p>
+
+<div
+class="flex flex-wrap flex-row gap-4 p-4">
+
+@for (pz of PatientManager.listaPZ(); track pz.braccialetto){
+    <his-card-pz
+        [paziente]="pz"
+    />
+}@empty {
+    <h1>Nessun paziente in attesa</h1>
+}
+
+</div>
