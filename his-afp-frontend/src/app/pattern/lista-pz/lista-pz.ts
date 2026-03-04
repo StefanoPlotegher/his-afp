@@ -1,12 +1,12 @@
 import { Component, computed, effect, inject, model, signal } from '@angular/core';
-import { CardPz } from '../card-pz/card-pz';
+import { CardPz } from '../../ui/card-pz/card-pz';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { Button } from "primeng/button";
 import { TagModule } from 'primeng/tag';
-import { SystemStatus } from '../core/SystemStatus/system-status';
-import { StatoAPI } from "../ui/stato-api/stato-api";
-import { PatientManager } from '../core/PatientManager/patient-manager';
+import { SystemStatus } from '../../core/SystemStatus/system-status';
+import { StatoAPI } from "../../ui/stato-api/stato-api";
+import { PatientManager } from '../../core/PatientManager/patient-manager';
 
 
 

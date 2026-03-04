@@ -2,7 +2,7 @@ import { Component, input, signal } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { JsonPipe } from '@angular/common';
-import { Paziente } from '../core/PatientManager/Pazienti.model';
+import { Paziente } from '../../core/PatientManager/Pazienti.model';
 
 @Component({
   selector: 'his-card-pz',
