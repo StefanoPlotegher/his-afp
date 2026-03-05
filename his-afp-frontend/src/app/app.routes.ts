@@ -18,7 +18,7 @@ export const routes: Routes = [
         component: ModificaPz
     },
     {
-        path: 'modifica-pz:id',
+        path: 'modifica-pz:patientId',
         component: ModificaPz
     },
     {

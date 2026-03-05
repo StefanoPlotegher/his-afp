@@ -10,7 +10,7 @@
             Note Triage: {{ paziente().note }}
         </p>
         <ng-template #footer>
-            <p-button label="Dimetti"></p-button>
+            <p-button label="Modifica" (onClick)="navigateToSchedaPaziente()"/>
         </ng-template>
     </p-card>
 </div>
