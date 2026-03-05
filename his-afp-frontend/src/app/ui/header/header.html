@@ -5,23 +5,31 @@
     </div>
     <!--- AZIENDA : Località + Reparto -->
     <div class="pl-1">
-        <h1 class="text-4xl font-bold text-primary">REPARTO</h1>
-        <P class="text-md text-gray-600 dark:text-gray-100">località</P>
+        <h1 class="text-4xl font-bold text-primary">Pronto Soccorso</h1>
+        <P class="text-md text-gray-600 dark:text-gray-100">Ospedale Segreto di Breguzzo</P>
     </div>
+    <!--DIVIDER-->
+    <p-divider layout="vertical"/>
+    <!--QUI SOTTO FA LA STESSA COSA MA SINC è PIU' BELLA MA CONSIGLIANO DI USARE QUELLA SOPRA PERCHE' C'E' LA LIBRERIA APPOSTA (BUUUUU)-->
+    <div class="border-l h-10 mx-1"></div>
     <!--- AZIONI -->
     <nav class="flex flex-row items-center gap-3 pl-4">
         
+    <!--bottoni per navigare (non in mare) (PZ purtroppo non sta per pizza)-->
     <p-button
         label="Lista PZ"
         routerLink="/lista-pz"
+        variant="outlined"
     />
     <p-button
         label="Accettazione PZ"
         routerLink="/accettazione-pz"
+        variant="outlined"
     />
     <p-button
         label="Stato Servizi"
         routerLink="/stato-servizi"
+        variant="outlined"
     />
     </nav>
     <div class="ml-auto mr-4">
