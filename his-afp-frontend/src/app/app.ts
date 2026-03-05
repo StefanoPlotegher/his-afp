@@ -1,10 +1,10 @@
 import { Component, signal } from '@angular/core';
-import { Button } from "primeng/button";
 import { RouterModule } from "@angular/router";
+import { Header } from "./ui/header/header";
 
 @Component({
   selector: 'his-root',
-  imports: [Button, RouterModule],
+  imports: [ RouterModule, Header],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
