@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
@@ -7,13 +7,26 @@ import { ButtonModule } from 'primeng/button';
   templateUrl: './darkmode-selector.html',
   styleUrl: './darkmode-selector.scss',
 })
-export class DarkmodeSelector {
+export class DarkmodeSelector implements OnInit {
 
-  isDarkMode = signal(false);
+  isDarkMode = false;
 
+  //eseguito all'avvio
+  ngOnInit() {
+    //  Carico (non con il caricabatterie) la preferenza sul tema della pagina e lo eseguo (tipo com si eseguivano gli ordini nel '45)
+    const savedMode = localStorage.getItem('isDarkMode');
+    if (savedMode === 'true') {
+      this.isDarkMode = true;
+      document.querySelector('html')?.classList.add('my-app-dark');
+    }
+  }
+
+  //eseguito con il bottone
   toggleDarkMode(){
     const element = document.querySelector('html');
     element?.classList.toggle('my-app-dark');
-    this.isDarkMode.update(value => !value);
+    this.isDarkMode = !this.isDarkMode;
+    // Save preference to local storage
+    localStorage.setItem('isDarkMode', this.isDarkMode.toString());
   }
 }
