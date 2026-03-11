@@ -4,18 +4,18 @@
 
 
 <!--lista dello stato dell'API con logica che cambia il colore in base se è buona o non va -->
-<ul>
-    <li>Service: 
+<ul class="place-items-center">
+    <li class="p-4">Service: 
         <p-tag 
             [severity]="srv == 'UP' ? 'success' : 'danger'" 
             value="{{srv}}" />
     </li>
-    <li>Database: 
+    <li class="p-4">Database: 
         <p-tag 
         [severity]="db == 'CONNECTED' ? 'success' : 'danger'" 
         value="{{db}}" />
     </li>
-    <li>Uptime: 
+    <li class="p-4">Uptime: 
         <p-tag 
         [severity]="uptime > 0 ? 'success' : 'danger'" 
         value="{{uptime}}" />
