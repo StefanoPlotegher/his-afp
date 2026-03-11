@@ -1,10 +1,19 @@
+@let icon = this.paziente().sex === 'M' ? "pi pi-mars" : "pi pi-venus";
+
 <div class="mb-4 p-4">
     <p-card 
         class="w-2xs border-l-8 {{setColoreDiStato()}}"
-        header="{{paziente().cognome}} {{paziente().nome}}"
         subheader="{{paziente().braccialetto}} - {{paziente().codiceColore}}"
     >
-        <p >
+        <!-- modifichiamo l'header com ci piace così mettiamo l'icona del sesso (hihihihih funny XDXDXDXD) li a destra-->
+        <ng-template #title>
+            <div class="relative w-full">
+                <span class="p-card-title">{{paziente().cognome}} {{paziente().nome}}</span>
+                <i class="pi {{icon}} absolute top-2 right-2 text-2xl"></i>
+            </div>
+        </ng-template>
+
+        <p>
             <b>{{ paziente().patologia }}</b>
             <br>
             Note Triage: {{ paziente().note }}

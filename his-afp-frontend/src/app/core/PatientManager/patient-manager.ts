@@ -41,9 +41,10 @@ export class PatientManager {
       codiceColore: pz.coloreCode,
       note: pz.noteTriage,
       patologia: pz.patologiaCode,
-      eta: this.calcolaEta(pz.dataNascita)
-    }
+      eta: this.calcolaEta(pz.dataNascita),
+      sex: pz.sex
   }
+}
 
 
   //calcolo dell'età partendo dalla data
