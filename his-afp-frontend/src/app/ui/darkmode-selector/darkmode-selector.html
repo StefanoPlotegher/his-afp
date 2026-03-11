@@ -1,5 +1,7 @@
+@let icon = this.isDarkMode()? 'pi pi-moon' : 'pi pi-sun';
+
 <p-button 
-icon="pi pi-sun"
+icon="{{icon}}"
 [rounded]="true"
 [text]="true"
 severity="secondary"
