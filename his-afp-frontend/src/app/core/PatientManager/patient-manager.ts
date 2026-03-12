@@ -12,10 +12,25 @@ export class PatientManager {
   #listaPzFiltered = signal<Paziente[]>(this.#listaPZ());
   listaPZ = this.#listaPzFiltered.asReadonly();
 
-  
+  timerID = signal(-1);
   //constructor(){
   //  this.fetchPazienti();
   //}
+
+  /**
+   * creazione timer di n secondi per il refresh
+   */
+
+  public refreshPazienti(){
+    if (this.timerID() >= 0){return;}
+    let id = setInterval(() => this.fetchPazienti(), 3000);
+    this.timerID.set(id);
+  }
+
+  public stopRefreshPazienti(){
+    clearInterval(this.timerID());
+    this.timerID.set(-1);
+  }
 
 
   //fetch dei pazienti http

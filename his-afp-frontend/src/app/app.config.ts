@@ -19,6 +19,6 @@ export const appConfig: ApplicationConfig = {
       }
     }),
     provideAppInitializer(() => inject(PatientManager).fetchPazienti()),
-    provideAppInitializer(() => inject(PatientManager).fetchPazienti()),
+    provideAppInitializer(() => inject(PatientManager).refreshPazienti()),
   ]
 };

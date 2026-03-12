@@ -1,11 +1,23 @@
 <p>Tabella Pazienti</p>
 <p-button 
-(onClick)="PatientManager.fetchPazienti()"
-icon="pi pi-refresh"
-[rounded]="true"
-[text]="true"
-severity="secondary"
+    (onClick)="PatientManager.fetchPazienti()"
+    icon="pi pi-refresh"
+    [rounded]="true"
+    [text]="true"
+    severity="secondary"
 />
+<p-button 
+    (onClick)="PatientManager.stopRefreshPazienti()"
+    icon="pi pi-stop"
+    [rounded]="true"
+    [text]="true"
+    severity="warn"
+/>
+<p-toggle-switch
+    [(ngModel)]="enableRefreshPz"
+/>
+
+<p>{{enableRefreshPz()}}</p>
 <input
     pInputText
     type="text"

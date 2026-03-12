@@ -4,10 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardPz } from "../../ui/card-pz/card-pz";
 import { Button } from "primeng/button";
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 @Component({
   selector: 'his-tabella-pz',
-  imports: [FormsModule, InputTextModule, CardPz, Button],
+  imports: [FormsModule, InputTextModule, CardPz, Button, ToggleSwitchModule],
   templateUrl: './tabella-pz.html',
   styleUrl: './tabella-pz.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -15,10 +16,17 @@ import { Button } from "primeng/button";
 export class TabellaPz {
   readonly PatientManager = inject(PatientManager)
   nomePaziente = model<string>('');
+  enableRefreshPz= model<boolean>(false);
 
   constructor(){
     effect(() => {
       this.PatientManager.filterByName(this.nomePaziente());
+
+      if(this.enableRefreshPz()){
+        this.PatientManager.refreshPazienti();
+      }else{
+        this.PatientManager.stopRefreshPazienti();
+      }
     });
   }
 }
