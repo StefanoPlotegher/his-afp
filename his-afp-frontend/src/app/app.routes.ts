@@ -14,14 +14,12 @@ export const routes: Routes = [
         path: 'accettazione-pz',
         loadComponent: () => import('./features/accettazione-pz/accettazione-pz').then(m => m.AccettazionePz)
     },
-    /*
     {
         path: 'modifica-pz',
         //component: ModificaPz
         //sta roba qui sotto fa il lazy loading del componente, letteralmente lazy perché carica il componente solo quando si accede alla rotta non prima (ceh stra pigro in poche parole, low key gasa parecchio)
         loadComponent: () => import('./features/modifica-pz/modifica-pz').then(m => m.ModificaPz)
     },
-    */
     {
         //quando si cerca tipo un singolo utente per id è meglio usare i pathParams piuttosto che i queryParams. perché si zitto e accttalo perché stai accedendo direttamente ad una risorsa
         path: 'modifica-pz/:patientId',
