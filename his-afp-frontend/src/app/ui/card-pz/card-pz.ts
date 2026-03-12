@@ -19,11 +19,7 @@ export class CardPz {
   //Lo usiamo per navigare (sempre non in mare) verso la modifica del paziente passando l'id come pramatero per l'url (kind of crazy btw)
 
   public navigateToSchedaPaziente(){
-    this.#router.navigate(['/modifica-pz'], {
-      queryParams:{
-        patientId: this.paziente().id
-      }
-    })
+    this.#router.navigate([`/modifica-pz/${this.paziente().id}`]);
   }
 
   //Qui si colore il bordo della card in base al codice colore e viene fuori un arcobaleno (solo se i vari codici sono diversi se no è tinta nita ovviamente)
