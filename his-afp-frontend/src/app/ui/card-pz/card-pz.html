@@ -1,9 +1,14 @@
 <div class="mb-4 p-4">
     <p-card 
-        class="w-2xs border-l-8 {{setColoreDiStato()}}"
+        class="w-2xs {{setColoreDiStato()}}"
         header="{{paziente().cognome}} {{paziente().nome}}"
-        subheader="{{paziente().braccialetto}} - {{paziente().codiceColore}}"
     >
+    <ng-template #subtitle>
+        <div class="flex flex-wrap items-center gap-2 p-card-subheader">
+            <div class="{{getBgColorClass()}}"></div>
+            <span>{{paziente().braccialetto}} - {{paziente().codiceColore}}</span>
+        </div>
+    </ng-template>
         <p >
             <b>{{ paziente().patologia }}</b>
             <br>
