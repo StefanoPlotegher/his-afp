@@ -12,9 +12,10 @@ export class PatientManager {
   #listaPzFiltered = signal<Paziente[]>(this.#listaPZ());
   listaPZ = this.#listaPzFiltered.asReadonly();
 
-  constructor(){
-    this.fetchPazienti();
-  }
+  
+  //constructor(){
+  //  this.fetchPazienti();
+  //}
 
 
   //fetch dei pazienti http
