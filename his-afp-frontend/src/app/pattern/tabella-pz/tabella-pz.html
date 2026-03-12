@@ -1,4 +1,11 @@
 <p>Tabella Pazienti</p>
+<p-button 
+(onClick)="PatientManager.fetchPazienti()"
+icon="pi pi-refresh"
+[rounded]="true"
+[text]="true"
+severity="secondary"
+/>
 <input
     pInputText
     type="text"
