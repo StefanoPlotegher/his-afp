@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component, effect, inject, model } from '@angu
 import { PatientManager } from '../../core/PatientManager/patient-manager';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
-import { CardPz } from "../../ui/card-pz/card-pz";
 import { Button } from "primeng/button";
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { CardPz } from '../../ui/card-pz/card-pz';
 
 @Component({
   selector: 'his-tabella-pz',
-  imports: [FormsModule, InputTextModule, CardPz, Button, ToggleSwitchModule],
+  imports: [FormsModule, InputTextModule, Button, ToggleSwitchModule, CardPz],
   templateUrl: './tabella-pz.html',
   styleUrl: './tabella-pz.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
