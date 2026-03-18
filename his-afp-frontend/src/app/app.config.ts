@@ -4,6 +4,7 @@ import Aura from '@primeuix/themes/aura';
 import { providePrimeNG } from 'primeng/config';
 import { routes } from './app.routes';
 import { PatientManager } from './core/PatientManager/patient-manager';
+import { GestioneRisorse } from './core/Risorse/gestione-risorse';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,5 +21,6 @@ export const appConfig: ApplicationConfig = {
     }),
     provideAppInitializer(() => inject(PatientManager).fetchPazienti()),
     provideAppInitializer(() => inject(PatientManager).refreshPazienti()),
+    provideAppInitializer(() => inject(GestioneRisorse).fetchRisorse())
   ]
 };
