@@ -3,6 +3,7 @@ import { ButtonModule } from "primeng/button";
 import { DarkmodeSelector } from "../darkmode-selector/darkmode-selector";
 import { RouterLink } from '@angular/router';
 import { DividerModule } from "primeng/divider";
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'his-header',
@@ -12,5 +13,8 @@ import { DividerModule } from "primeng/divider";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Header {
-
+  
+  //ci passiamo le variabli dell'evironment così è tutto più bello
+  reparto = environment.reparto;
+  struttura = environment.struttura;
 }
