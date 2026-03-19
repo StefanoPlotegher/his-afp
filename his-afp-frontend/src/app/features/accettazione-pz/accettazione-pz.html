@@ -1,3 +1,47 @@
-<p>triage Colors: {{this.gestioneRisorse.triageColors()| json }}</p>
+<p>triage Colors: {{this.gestioneRisorse.triageColors() | json }}</p>
+<hr>
 <p>Pathologies: {{this.gestioneRisorse.pathology() | json}}</p>
-<p>Arrival Modes: {{this.gestioneRisorse.arrivalModes()| json }}</p>
+<hr>
+<p>Arrival Modes: {{this.gestioneRisorse.arrivalModes() | json }}</p>
+<hr>
+<br>
+<hr>
+<br>
+<hr>
+<br>
+
+<div class="flex flex-col">
+<label for="nome">Scemo chi scrive: </label>
+<input type="text" pInputText placeholder="I SEE YOUUU" [formControl]="nome" id="nome">
+</div>
+<!--qui si vede come si controllano gli stati delle form serve fidati non farti domanda -->
+<p>Modifica: 
+    @if (nome.dirty) {
+        <span class="text-green-500">Modificato</span>
+    }@else {
+        <span class="text-red-500">Non Modificato</span>
+    }
+</p>
+<p>Toccata:
+    @if (nome.touched) {
+        <span class="text-green-500">Toccato (hihihihi)</span>
+    }@else {
+        <span class="text-red-500">Non Toccato (BOOOOO)</span>
+    }
+</p>
+<p>Valida:
+    @if (nome.valid) {
+        <span class="text-green-500">Valido</span>
+    }@else {
+        <span class="text-red-500">Non valido (scemo)</span>
+    }
+</p>
+<p>Pending:
+    @if (nome.pending) {
+        <span class="text-green-500">Pendente come quello che ho al collo</span>
+    }@else {
+        <span class="text-red-500">Non Pendente come te che sei povero</span>
+    }
+</p>
+
+<p>Valore nome: {{ nome.value }}</p>
