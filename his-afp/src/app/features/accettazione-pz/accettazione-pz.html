@@ -1,1 +1,68 @@
-<p>accettazione-pz works!</p>
+<div class="flex flex-col p-4">
+  <label for="nome">Nome:</label>
+  <input
+    [formControl]="nome"
+    [invalid]="nome.invalid && (nome.touched || nome.dirty)"
+    class="w-2xs"
+    id="nome"
+    pInputText
+    type="text"
+  >
+  @if (nome.invalid && (nome.touched || nome.dirty)) {
+    @if (nome.getError('required')) {
+      <p class="text-red-500">
+        Il campo 'nome' è obbligatorio.
+      </p>
+    }
+    @if (nome.getError('minlength')) {
+      <p class="text-red-500">
+        Il campo 'nome' deve contenere almeno {{ nome.getError('minlength').requiredLength }} caratteri.
+      </p>
+    }
+    @if (nome.getError('maxlength')) {
+      <p class="text-red-500">
+        Il campo 'nome' non può superare i {{ nome.getError('maxlength').requiredLength }} caratteri.
+      </p>
+    }
+  }
+</div>
+<p>Error: {{ nome.errors | json }}</p>
+
+
+<p>Modifica:
+  @if (nome.dirty) {
+    <span class="text-green-500">Modificato</span>
+  } @else {
+    <span class="text-red-500">Non modificato</span>
+  }
+</p>
+<p>Toccata:
+  @if (nome.touched) {
+    <span class="text-green-500">Toccato</span>
+  } @else {
+    <span class="text-red-500">Non toccato</span>
+  }
+</p>
+<p>Valida:
+  @if (nome.valid) {
+    <span class="text-green-500">Valida</span>
+  } @else {
+    <span class="text-red-500">Non valida</span>
+  }
+</p>
+<p>Form valida:
+  @if (nome.invalid && (nome.touched || nome.dirty)) {
+    <span class="text-green-500">Form non valida</span>
+  } @else {
+    <span class="text-red-500">Form valida</span>
+  }
+</p>
+<p>Pending:
+  @if (nome.pending) {
+    <span class="text-green-500">Pending</span>
+  } @else {
+    <span class="text-red-500">Non pending</span>
+  }
+</p>
+
+<p>Valore nome: {{ nome.value }}</p>
