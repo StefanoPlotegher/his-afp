@@ -13,19 +13,19 @@
       />
       @if (checkFormControl('anagrafica.nome')) {
         @if (checkFormControlError('anagrafica.nome', 'required')) {
-          <p class="text-red-500">Il campo 'nome' è obbligatorio.</p>
+          <p-message severity="error" variant="simple">
+            Il campo nome è obbligatorio come pregare la sacra DPG perché salvi la trap italiana ormai allo sbando
+          </p-message>
         }
         @if (checkFormControlError('anagrafica.nome', 'minlength')) {
-          <p class="text-red-500">
-            Il campo 'nome' deve contenere almeno
-            {{ checkFormControlError('anagrafica.nome', 'minlength').requiredLength }} caratteri.
-          </p>
+          <p-message severity="error" variant="simple">
+            Che idiota, immagina scrivere come nome meno di {{checkFormControlError('anagrafica.nome', 'minlength').requiredLength}} caratteri e essere convinto che vada bene
+          </p-message>
         }
         @if (checkFormControlError('anagrafica.nome', 'maxlength')) {
-          <p class="text-red-500">
-            Il campo 'nome' non può superare i
-            {{ checkFormControlError('anagrafica.nome', 'maxlength').requiredLength }} caratteri.
-          </p>
+          <p-message severity="error" variant="simple">
+            Frate no dai, non puoi scrivere più di {{checkFormControlError('anagrafica.nome', 'maxlength').requiredLength}} caratteri svegliati
+          </p-message>
         }
       }
     </div>
@@ -40,21 +40,85 @@
         pInputText
         type="text"
       />
-      @if (checkFormControl('cognome')) {
-        @if (checkFormControlError('cognome', 'required')) {
-          <p class="text-red-500">Il campo 'nome' è obbligatorio.</p>
+      
+      @if (checkFormControl('anagrafica.cognome')) {
+        @if (checkFormControlError('anagrafica.cognome', 'required')) {
+          <p-message severity="error" variant="simple">
+            Il campo cognome è obbligatorio come toccarsi li sotto in caso di necessario scongiuro
+          </p-message>
         }
-        @if (checkFormControlError('cognome', 'minlength')) {
-          <p class="text-red-500">
-            Il campo 'cognome' deve contenere almeno
-            {{ checkFormControlError('cognome', 'minlength').requiredLength }} caratteri.
-          </p>
+        @if (checkFormControlError('anagrafica.cognome', 'minlength')) {
+          <p-message severity="error" variant="simple">
+            Che idiota, immagina scrivere come cognome meno di {{checkFormControlError('anagrafica.cognome', 'minlength').requiredLength}} caratteri e essere convinto che vada bene
+          </p-message>
         }
-        @if (checkFormControlError('cognome', 'maxlength')) {
-          <p class="text-red-500">
-            Il campo 'cognome' non può superare i
-            {{ checkFormControlError('cognome', 'maxlength').requiredLength }} caratteri.
-          </p>
+        @if (checkFormControlError('anagrafica.cognome', 'maxlength')) {
+          <p-message severity="error" variant="simple">
+            Frate no dai, non puoi scrivere più di {{checkFormControlError('anagrafica.cognome', 'maxlength').requiredLength}} caratteri svegliati
+          </p-message>
+        }
+      }
+    </div>
+    <div class="flex flex-col p-4">
+      <label for="dataNascita">Data di Nascita:</label>
+      <p-date-picker
+        [invalid]="checkFormControl('anagrafica.dataNascita')"
+        class="w-2xs"
+        formControlName="dataNascita"
+        id="dataNascita"
+        dateFormat = "dd/mm/yyyy"
+        [maxDate] = 'maxDate'
+        placeholder = "dd/mm/yyyy"
+      />
+      @if (checkFormControl('anagrafica.dataNascita')) {
+        @if (checkFormControlError('anagrafica.dataNascita', 'required')) {
+          <p-message severity="error" variant="simple">
+            Il campo "data Nascita" è obbligatorio come sperare che McKennie e Yldiz restino alla juve
+          </p-message>
+        }
+      }
+    </div>
+        <div class="flex flex-col p-4">
+      <label for="codiceFiscale">codice Fiscale:</label>
+      <input
+        [invalid]="checkFormControl('codiceFiscale')"
+        class="w-2xs"
+        formControlName="codiceFiscale"
+        id="codiceFiscale"
+        pInputText
+        type="text"
+      />
+      
+      @if (checkFormControl('anagrafica.codiceFiscale')) {
+        @if (checkFormControlError('anagrafica.codiceFiscale', 'required')) {
+          <p-message severity="error" variant="simple">
+            Il campo codice Fiscale è obbligatorio come giocarsi alla roulette il primo stipendio
+          </p-message>
+        }
+        @if (checkFormControlError('anagrafica.codiceFiscale', 'pattern')) {
+          <p-message severity="error" variant="simple">
+            Scemooooo, devi mettere il codice fiscale con il giusto formato dai su, non posso stare qui ogni volta a controllare che tu non faccia cazzate
+          </p-message>
+        }
+      }
+    </div>
+        <div class="flex flex-col p-4">
+      <label for="sesso">Sesso(hahahahah che ridere no nvedi come rido? e non pensare che puoi fare il fenomeno, o maschio o femmina e ti attacchi):</label>
+      <p-select
+      id="sesso"
+      [invalid] = "checkFormControl('sesso')"
+      [options] = "sexOption"
+      formControlName = "sesso"
+      class="w-2xs"
+      optionLabel = "desc"
+      optionValue = "code"
+      />
+      
+      @if (checkFormControl('anagrafica.cognome')) {
+        @if (checkFormControlError('anagrafica.cognome', 'required')) {
+          <p-message severity="error" variant="simple">
+            Il campo sesso è obbligatorio, meno cagate non siamo in america
+          </p-message>
         }
       }
     </div>
@@ -74,46 +138,41 @@
 
 
 <p>Valore Form Paziente: {{ paziente.value | json }}</p>
-<p>Error: {{ paziente.errors | json }}</p>
-
-<p>
-  Modifica:
-  @if (paziente.dirty) {
-    <span class="text-green-500">Modificato</span>
-  } @else {
-    <span class="text-red-500">Non modificato</span>
-  }
+<p>Errori: {{paziente.errors | json}}</p>
+<!--qui si vede come si controllano gli stati delle form serve fidati non farti domanda -->
+<p>Modifica: 
+    @if (paziente.dirty) {
+        <span class="text-green-500">Modificato</span>
+    }@else {
+        <span class="text-red-500">Non Modificato</span>
+    }
 </p>
-<p>
-  Toccata:
-  @if (paziente.touched) {
-    <span class="text-green-500">Toccato</span>
-  } @else {
-    <span class="text-red-500">Non toccato</span>
-  }
+<p>Toccata:
+    @if (paziente.touched) {
+        <span class="text-green-500">Toccato (hihihihi)</span>
+    }@else {
+        <span class="text-red-500">Non Toccato (BOOOOO)</span>
+    }
 </p>
-<p>
-  Valida:
-  @if (paziente.valid) {
-    <span class="text-green-500">Valida</span>
-  } @else {
-    <span class="text-red-500">Non valida</span>
-  }
+<p>Valida:
+    @if (paziente) {
+        <span class="text-green-500">Valido</span>
+    }@else {
+        <span class="text-red-500">Non valido (scemo)</span>
+    }
 </p>
-<p>
-  Form valida:
-  @if (paziente.invalid && (paziente.touched || paziente.dirty)) {
-    <span class="text-green-500">Form non valida</span>
-  } @else {
-    <span class="text-red-500">Form valida</span>
-  }
+<p>Form Valida:
+    @if (paziente.invalid && (paziente.touched || paziente.dirty)) {
+        <span class="text-red-500">La form non vale (come il gol del nero, questa è per pochi)</span>
+    }@else {
+        <span class="text-green-500">'tt'apposto frate</span>
+    }
 </p>
-<p>
-  Pending:
-  @if (paziente.pending) {
-    <span class="text-green-500">Pending</span>
-  } @else {
-    <span class="text-red-500">Non pending</span>
-  }
+<p>Pending:
+    @if (paziente.pending) {
+        <span class="text-green-500">Pendente come quello che ho al collo</span>
+    }@else {
+        <span class="text-red-500">Non Pendente come te che sei povero</span>
+    }
 </p>
 
