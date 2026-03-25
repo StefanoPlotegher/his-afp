@@ -102,7 +102,7 @@
         }
       }
     </div>
-        <div class="flex flex-col p-4">
+    <div class="flex flex-col p-4">
       <label for="sesso">Sesso(hahahahah che ridere no nvedi come rido? e non pensare che puoi fare il fenomeno, o maschio o femmina e ti attacchi):</label>
       <p-select
       id="sesso"
@@ -118,6 +118,105 @@
         @if (checkFormControlError('anagrafica.cognome', 'required')) {
           <p-message severity="error" variant="simple">
             Il campo sesso è obbligatorio, meno cagate non siamo in america
+          </p-message>
+        }
+      }
+    </div>
+  </fieldset>
+    
+  <fieldset formGroupName="sanitaria">
+    <div class="flex flex-col p-4">
+      <label for="patologia">Patologia:</label>
+      <p-select
+      id="patologia"
+      [invalid] = "checkFormControl('patologia')"
+      [options] = "gestioneRisorse.pathology()"
+      [filter] = "true"
+      [filterFields]="['code','description']"
+      formControlName = "patologia"
+      class="w-2xs"
+      optionLabel = "description"
+      optionValue = "code"
+      >
+      <ng-template #item let-pathology>
+        {{pathology.code}} - {{pathology.description}}
+      </ng-template>
+      <ng-template #selectedItem let-pathology>
+        {{pathology.code}} - {{pathology.description}}
+      </ng-template>
+      </p-select>
+      
+      @if (checkFormControl('sanitaria.patologia')) {
+        @if (checkFormControlError('sanitaria.patologia', 'required')) {
+          <p-message severity="error" variant="simple">
+            Il campo patologia è obbligatorio come raggiungere un tasso alcolemico di almeno 2.0 prima di mettersi alla guida
+          </p-message>
+        }
+      }
+    </div>
+    <div class="flex flex-col p-4">
+      <label for="modArrivo">Modalità di arrivo:</label>
+      <p-select
+      id="modArrivo"
+      [invalid] = "checkFormControl('modArrivo')"
+      [options] = "gestioneRisorse.arrivalModes()"
+      [filter] = "true"
+      [filterFields]="['code','description']"
+      formControlName = "modArrivo"
+      class="w-2xs"
+      optionLabel = "description"
+      optionValue = "code"
+      >
+      <ng-template #item let-modArrivo>
+        {{modArrivo.code}} - {{modArrivo.description}}
+      </ng-template>
+      <ng-template #selectedItem let-modArrivo>
+        {{modArrivo.code}} - {{modArrivo.description}}
+      </ng-template>
+      </p-select>
+      
+      @if (checkFormControl('sanitaria.modArrivo')) {
+        @if (checkFormControlError('sanitaria.modArrivo', 'required')) {
+          <p-message severity="error" variant="simple">
+            Il campo patologia è obbligatorio come raggiungere un tasso alcolemico di almeno 2.0 prima di mettersi alla guida
+          </p-message>
+        }
+      }
+    </div>
+    <div class="flex flex-col p-4">
+      <label for="codiceColore">Codice Colore:</label>
+      <p-select
+      id="codiceColore"
+      [invalid] = "checkFormControl('codiceColore')"
+      [options] = "gestioneRisorse.triageColors()"
+      formControlName = "codiceColore"
+      class="w-2xs"
+      optionValue = "code"
+      >
+      <ng-template #item let-codiceColore>
+        <div class="flex flex-row item-center gap-2">
+          <span
+          class="inline-block size-5 h-5 rounded-md"
+          [style.background-color]="codiceColore.hexValue"
+          ></span>
+        </div>
+        {{codiceColore.displayName}}
+      </ng-template>
+      <ng-template #selectedItem let-codiceColore>
+        <div class="flex flex-row item-center gap-2">
+          <span
+          class="inline-block size-5 h-5 rounded-md"
+          [style.background-color]="codiceColore.hexValue"
+          ></span>
+        </div>
+        {{codiceColore.displayName}}
+      </ng-template>
+      </p-select>
+      
+      @if (checkFormControl('sanitaria.codiceColore')) {
+        @if (checkFormControlError('sanitaria.codiceColore', 'required')) {
+          <p-message severity="error" variant="simple">
+            Il campo patologia è obbligatorio come raggiungere un tasso alcolemico di almeno 2.0 prima di mettersi alla guida
           </p-message>
         }
       }
