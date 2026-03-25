@@ -1,30 +1,39 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { GestioneRisorse } from '../../core/Risorse/gestione-risorse';
+import { InputText } from 'primeng/inputtext';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
-import { InputText } from "primeng/inputtext";
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Button } from "primeng/button";
-import { maxLength } from '@angular/forms/signals';
+import { Button } from 'primeng/button';
 
 @Component({
   selector: 'his-accettazione-pz',
-  imports: [JsonPipe, InputText, ReactiveFormsModule, Button],
+  imports: [InputText, ReactiveFormsModule, JsonPipe, Button],
   templateUrl: './accettazione-pz.html',
   styleUrl: './accettazione-pz.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccettazionePz {
   gestioneRisorse = inject(GestioneRisorse);
-  nome = new FormControl('', [
-    Validators.required,
-    Validators.minLength(2),
-    Validators.maxLength(30),
-  ]);
-  protected readonly maxLength = maxLength;
+  // paziente = new FormGroup({
+  //   nome: new FormControl('', [Validators.required]),
+  //   cognome: new FormControl('', [Validators.required]),
+  // });
+  readonly #fb = inject(FormBuilder);
 
-  paziente = new FormGroup({
-    nome: new FormControl('', [Validators.required]),
-    cognome: new FormControl('', [Validators.required]),
+  paziente = this.#fb.group({
+    anagrafica: this.#fb.group({
+      nome: ['', [Validators.required]],
+      cognome: ['', [Validators.required]],
+      dataNascita: ['', [Validators.required]],
+      codiceFiscale: ['', [Validators.required]],
+      sesso: ['', [Validators.required]],
+    }),
+    sanitaria: this.#fb.group({
+      patologia: ['', [Validators.required]],
+      codiceColore: ['', [Validators.required]],
+      modArrivo: ['', [Validators.required]],
+      noteTriage: ['', Validators.required],
+    }),
   });
 
   checkFormControl(control: string) {
