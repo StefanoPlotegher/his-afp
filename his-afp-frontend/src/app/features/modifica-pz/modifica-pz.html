@@ -1,12 +1,266 @@
-<p>modifica-pz works!</p>
-<p>Patient ID: {{patientId() || 'NONE' }}</p>
+<form (submit)="onSubmit()" [formGroup]="paziente">
 
-@if (patient.hasValue()){
-    <p>Patient Name: {{ patient.value().data | json }}</p>
-}@else if (patient.error()) {
-    <p>Error loading patient: {{ patient.error()?.message }}</p>
-}@else if (patient.isLoading()) {
-    <p>Loading patient...</p>
-}
 
-<p-button (onClick)="patient.reload()" label="Reload Patient"></p-button>
+  <div class="flex flex-row flex-wrap gap-8">
+  <p-fieldset formGroupName="anagrafica" legend="Dati Anagrafici">
+    <div class="flex flex-col p-4">
+      <label for="nome">Nome:</label>
+      <input
+        [invalid]="checkFormControl('anagrafica.nome')"
+        class="w-2xs"
+        formControlName="nome"
+        id="nome"
+        pInputText
+        type="text"
+      />
+      @if (checkFormControl('anagrafica.nome')) {
+        @if (checkFormControlError('anagrafica.nome', 'required')) {
+          <p-message severity="error" variant="simple">
+            Il campo nome è obbligatorio come pregare la sacra DPG perché salvi la trap italiana ormai allo sbando
+          </p-message>
+        }
+        @if (checkFormControlError('anagrafica.nome', 'minlength')) {
+          <p-message severity="error" variant="simple">
+            Che idiota, immagina scrivere come nome meno di {{checkFormControlError('anagrafica.nome', 'minlength').requiredLength}} caratteri e essere convinto che vada bene
+          </p-message>
+        }
+        @if (checkFormControlError('anagrafica.nome', 'maxlength')) {
+          <p-message severity="error" variant="simple">
+            Frate no dai, non puoi scrivere più di {{checkFormControlError('anagrafica.nome', 'maxlength').requiredLength}} caratteri svegliati
+          </p-message>
+        }
+      }
+    </div>
+
+    <div class="flex flex-col p-4">
+      <label for="cognome">Cognome:</label>
+      <input
+        [invalid]="checkFormControl('cognome')"
+        class="w-2xs"
+        formControlName="cognome"
+        id="cognome"
+        pInputText
+        type="text"
+      />
+      
+      @if (checkFormControl('anagrafica.cognome')) {
+        @if (checkFormControlError('anagrafica.cognome', 'required')) {
+          <p-message severity="error" variant="simple">
+            Il campo cognome è obbligatorio come toccarsi li sotto in caso di necessario scongiuro
+          </p-message>
+        }
+        @if (checkFormControlError('anagrafica.cognome', 'minlength')) {
+          <p-message severity="error" variant="simple">
+            Che idiota, immagina scrivere come cognome meno di {{checkFormControlError('anagrafica.cognome', 'minlength').requiredLength}} caratteri e essere convinto che vada bene
+          </p-message>
+        }
+        @if (checkFormControlError('anagrafica.cognome', 'maxlength')) {
+          <p-message severity="error" variant="simple">
+            Frate no dai, non puoi scrivere più di {{checkFormControlError('anagrafica.cognome', 'maxlength').requiredLength}} caratteri svegliati
+          </p-message>
+        }
+      }
+    </div>
+    <div class="flex flex-col p-4">
+      <label for="dataNascita">Data di Nascita:</label>
+      <p-date-picker
+        [invalid]="checkFormControl('anagrafica.dataNascita')"
+        class="w-2xs"
+        formControlName="dataNascita"
+        id="dataNascita"
+        dateFormat = "dd/mm/yy"
+        [maxDate] = 'maxDate'
+        placeholder = "dd/mm/yy"
+      />
+      @if (checkFormControl('anagrafica.dataNascita')) {
+        @if (checkFormControlError('anagrafica.dataNascita', 'required')) {
+          <p-message severity="error" variant="simple">
+            Il campo "data Nascita" è obbligatorio come sperare che McKennie e Yldiz restino alla juve
+          </p-message>
+        }
+      }
+    </div>
+        <div class="flex flex-col p-4">
+      <label for="codiceFiscale">codice Fiscale:</label>
+      <input
+        [invalid]="checkFormControl('codiceFiscale')"
+        class="w-2xs"
+        formControlName="codiceFiscale"
+        id="codiceFiscale"
+        pInputText
+        type="text"
+      />
+      
+      @if (checkFormControl('anagrafica.codiceFiscale')) {
+        @if (checkFormControlError('anagrafica.codiceFiscale', 'required')) {
+          <p-message severity="error" variant="simple">
+            Il campo codice Fiscale è obbligatorio come giocarsi alla roulette il primo stipendio
+          </p-message>
+        }
+        @if (checkFormControlError('anagrafica.codiceFiscale', 'pattern')) {
+          <p-message severity="error" variant="simple">
+            Scemooooo, devi mettere il codice fiscale con il giusto formato dai su, non posso stare qui ogni volta a controllare che tu non faccia cazzate
+          </p-message>
+        }
+      }
+    </div>
+    <div class="flex flex-col p-4">
+      <label for="sesso">Sesso(hahahahah che ridere non vedi come rido? e non pensare che puoi fare il fenomeno, o maschio o femmina e ti attacchi):</label>
+      <p-select
+      id="sesso"
+      [invalid] = "checkFormControl('sesso')"
+      [options] = "sexOption"
+      formControlName = "sesso"
+      class="w-2xs"
+      optionLabel = "desc"
+      optionValue = "code"
+      />
+      
+      @if (checkFormControl('anagrafica.sesso')) {
+        @if (checkFormControlError('anagrafica.sesso', 'required')) {
+          <p-message severity="error" variant="simple">
+            Il campo sesso è obbligatorio, meno cagate non siamo in america
+          </p-message>
+        }
+      }
+    </div>
+  </p-fieldset>
+  <p-fieldset formGroupName="sanitaria" legend="Dati Sanitari">
+    <div class="flex flex-col p-4">
+      <label for="patologia">Patologia:</label>
+      <p-select
+      id="patologia"
+      [invalid] = "checkFormControl('patologia')"
+      [options] = "gestioneRisorse.pathology()"
+      [filter] = "true"
+      [filterFields]="['code','description']"
+      formControlName = "patologia"
+      class="w-2xs"
+      optionLabel = "description"
+      optionValue = "code"
+      >
+      <ng-template #item let-pathology>
+        {{pathology.code}} - {{pathology.description}}
+      </ng-template>
+      <ng-template #selectedItem let-pathology>
+        {{pathology.code}} - {{pathology.description}}
+      </ng-template>
+      </p-select>
+      
+      @if (checkFormControl('sanitaria.patologia')) {
+        @if (checkFormControlError('sanitaria.patologia', 'required')) {
+          <p-message severity="error" variant="simple">
+            Il campo patologia è obbligatorio come raggiungere un tasso alcolemico di almeno 2.0 prima di mettersi alla guida
+          </p-message>
+        }
+      }
+    </div>
+    <div class="flex flex-col p-4">
+      <label for="modArrivo">Modalità di arrivo:</label>
+      <p-select
+      id="modArrivo"
+      [invalid] = "checkFormControl('modArrivo')"
+      [options] = "gestioneRisorse.arrivalModes()"
+      [filter] = "true"
+      [filterFields]="['code','description']"
+      formControlName = "modArrivo"
+      class="w-2xs"
+      optionLabel = "description"
+      optionValue = "code"
+      >
+      <ng-template #item let-modArrivo>
+        {{modArrivo.code}} - {{modArrivo.description}}
+      </ng-template>
+      <ng-template #selectedItem let-modArrivo>
+        {{modArrivo.code}} - {{modArrivo.description}}
+      </ng-template>
+      </p-select>
+      
+      @if (checkFormControl('sanitaria.modArrivo')) {
+        @if (checkFormControlError('sanitaria.modArrivo', 'required')) {
+          <p-message severity="error" variant="simple">
+            Il campo modalità di arrivo è obbligatorio come dare la colpa ad una determinata religione quando succede qualcosa di brutto
+          </p-message>
+        }
+      }
+    </div>
+    <div class="flex flex-col p-4">
+      <label for="codiceColore">Codice Colore:</label>
+      <p-select
+      id="codiceColore"
+      [invalid] = "checkFormControl('codiceColore')"
+      [options] = "gestioneRisorse.triageColors()"
+      formControlName = "codiceColore"
+      class="w-2xs"
+      optionValue = "code"
+      >
+      <ng-template #item let-codiceColore>
+        <div class="flex flex-row items-center gap-2">
+          <span
+          class="inline-block size-5 h-5 rounded-md"
+          [style.background-color]="codiceColore.hexValue"
+          ></span>
+          {{codiceColore.displayName}}
+        </div>
+      </ng-template>
+      <ng-template #selectedItem let-codiceColore>
+        <div class="flex flex-row items-center gap-2">
+          <span
+          class="inline-block size-5 h-5 rounded-md"
+          [style.background-color]="codiceColore.hexValue"
+          ></span>
+        {{codiceColore.displayName}}
+        </div>
+      </ng-template>
+      </p-select>
+      
+      @if (checkFormControl('sanitaria.codiceColore')) {
+        @if (checkFormControlError('sanitaria.codiceColore', 'required')) {
+          <p-message severity="error" variant="simple">
+            Il campo codice colore è obbligatorio come lodare il sole (e tu? hai mai lodato il sole????? PUTTANAAAAAAA)
+          </p-message>
+        }
+      }
+    </div>
+    <div class="flex flex-col p-4">
+      <label for="noteTriage">Note Triage (non musicali DO RE MI FA SOL LA SI):</label>
+      <textarea
+      pTextarea
+      id="noteTriage"
+      [invalid] = "checkFormControl('sanitaria.noteTriage')"
+      formControlName = "noteTriage"
+      cols="30"
+      class="w-2xs"
+      rows="5"
+      [autoResize]="true"
+      >
+      </textarea>
+      
+      @if (checkFormControl('sanitaria.noteTriage')) {
+        @if (checkFormControlError('sanitaria.noteTriage', 'required')) {
+          <p-message severity="error" variant="simple">
+            Il campo note triage è obbligatorio come per l'italia non convocare giovani promettenti in nazionale, solo over 30 mannaggia
+          </p-message>
+        }
+        @if (checkFormControlError('sanitaria.noteTriage', 'maxlength')) {
+          <p-message severity="error" variant="simple">
+            Ma dai cazzo non puoi scrivere più di {{checkFormControlError('sanitaria.noteTriage', 'maxlength').requiredLength}} caratteri. Chi cazzo sei Dante????
+          </p-message>
+        }
+      }
+    </div>
+  </p-fieldset>
+  </div>
+  <div class="flex flex-row gap-4 pt-3">
+  <p-button
+    label="Invia"
+    type="submit"
+  />
+  <p-button
+    (onClick)="paziente.reset()"
+    label="Reset"
+    severity="warn"
+    variant="outlined"
+  />
+  </div>
+</form>

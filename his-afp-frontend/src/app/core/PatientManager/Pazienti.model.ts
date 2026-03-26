@@ -19,6 +19,7 @@ export interface PazienteDTO {
   nome: string;
   cognome: string;
   dataNascita: string;
+  sex: string;
   codiceFiscale: string;
   patologiaDescrizione: string;
   coloreCode: string;
