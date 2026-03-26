@@ -1,6 +1,8 @@
 <form (submit)="onSubmit()" [formGroup]="paziente">
-  <fieldset formGroupName="anagrafica">
-    <legend>Dati anagrafici</legend>
+
+
+  <div class="flex flex-row flex-wrap gap-8">
+  <p-fieldset formGroupName="anagrafica" legend="Dati Anagrafici">
     <div class="flex flex-col p-4">
       <label for="nome">Nome:</label>
       <input
@@ -66,9 +68,9 @@
         class="w-2xs"
         formControlName="dataNascita"
         id="dataNascita"
-        dateFormat = "dd/mm/yyyy"
+        dateFormat = "dd/mm/yy"
         [maxDate] = 'maxDate'
-        placeholder = "dd/mm/yyyy"
+        placeholder = "dd/mm/yy"
       />
       @if (checkFormControl('anagrafica.dataNascita')) {
         @if (checkFormControlError('anagrafica.dataNascita', 'required')) {
@@ -103,7 +105,7 @@
       }
     </div>
     <div class="flex flex-col p-4">
-      <label for="sesso">Sesso(hahahahah che ridere no nvedi come rido? e non pensare che puoi fare il fenomeno, o maschio o femmina e ti attacchi):</label>
+      <label for="sesso">Sesso(hahahahah che ridere non vedi come rido? e non pensare che puoi fare il fenomeno, o maschio o femmina e ti attacchi):</label>
       <p-select
       id="sesso"
       [invalid] = "checkFormControl('sesso')"
@@ -114,17 +116,16 @@
       optionValue = "code"
       />
       
-      @if (checkFormControl('anagrafica.cognome')) {
-        @if (checkFormControlError('anagrafica.cognome', 'required')) {
+      @if (checkFormControl('anagrafica.sesso')) {
+        @if (checkFormControlError('anagrafica.sesso', 'required')) {
           <p-message severity="error" variant="simple">
             Il campo sesso è obbligatorio, meno cagate non siamo in america
           </p-message>
         }
       }
     </div>
-  </fieldset>
-    
-  <fieldset formGroupName="sanitaria">
+  </p-fieldset>
+  <p-fieldset formGroupName="sanitaria" legend="Dati Sanitari">
     <div class="flex flex-col p-4">
       <label for="patologia">Patologia:</label>
       <p-select
@@ -178,7 +179,7 @@
       @if (checkFormControl('sanitaria.modArrivo')) {
         @if (checkFormControlError('sanitaria.modArrivo', 'required')) {
           <p-message severity="error" variant="simple">
-            Il campo patologia è obbligatorio come raggiungere un tasso alcolemico di almeno 2.0 prima di mettersi alla guida
+            Il campo modalità di arrivo è obbligatorio come dare la colpa ad una determinata religione quando succede qualcosa di brutto
           </p-message>
         }
       }
@@ -194,35 +195,68 @@
       optionValue = "code"
       >
       <ng-template #item let-codiceColore>
-        <div class="flex flex-row item-center gap-2">
+        <div class="flex flex-row items-center gap-2">
           <span
           class="inline-block size-5 h-5 rounded-md"
           [style.background-color]="codiceColore.hexValue"
           ></span>
+          {{codiceColore.displayName}}
         </div>
-        {{codiceColore.displayName}}
       </ng-template>
       <ng-template #selectedItem let-codiceColore>
-        <div class="flex flex-row item-center gap-2">
+        <div class="flex flex-row items-center gap-2">
           <span
           class="inline-block size-5 h-5 rounded-md"
           [style.background-color]="codiceColore.hexValue"
           ></span>
-        </div>
         {{codiceColore.displayName}}
+        </div>
       </ng-template>
       </p-select>
       
       @if (checkFormControl('sanitaria.codiceColore')) {
         @if (checkFormControlError('sanitaria.codiceColore', 'required')) {
           <p-message severity="error" variant="simple">
-            Il campo patologia è obbligatorio come raggiungere un tasso alcolemico di almeno 2.0 prima di mettersi alla guida
+            Il campo codice colore è obbligatorio come lodare il sole (e tu? hai mai lodato il sole????? PUTTANAAAAAAA)
           </p-message>
         }
       }
     </div>
-  </fieldset>
+    <div class="flex flex-col p-4">
+      <label for="noteTriage">Note Triage (non musicali DO RE MI FA SOL LA SI):</label>
+      <textarea
+      pTextarea
+      id="noteTriage"
+      [invalid] = "checkFormControl('sanitaria.noteTriage')"
+      formControlName = "noteTriage"
+      cols="30"
+      class="w-2xs"
+      rows="5"
+      [autoResize]="true"
+      >
+      </textarea>
+      
+      @if (checkFormControl('sanitaria.noteTriage')) {
+        @if (checkFormControlError('sanitaria.noteTriage', 'required')) {
+          <p-message severity="error" variant="simple">
+            Il campo note triage è obbligatorio come per l'italia non convocare giovani promettenti in nazionale, solo over 30 mannaggia
+          </p-message>
+        }
+        @if (checkFormControlError('sanitaria.noteTriage', 'maxlength')) {
+          <p-message severity="error" variant="simple">
+            Ma dai cazzo non puoi scrivere più di {{checkFormControlError('sanitaria.noteTriage', 'maxlength').requiredLength}} caratteri. Chi cazzo sei Dante????
+          </p-message>
+        }
+      }
+    </div>
+  </p-fieldset>
+  </div>
+  <!--- tolti perchè fanno schifo ma tipo un sacco
+  <fieldset formGroupName="anagrafica"></fieldset>
 
+  <fieldset formGroupName="sanitaria"></fieldset>
+  -->
+  <div class="flex flex-row gap-4 pt-3">
   <p-button
     label="Invia"
     type="submit"
@@ -233,12 +267,13 @@
     severity="warn"
     variant="outlined"
   />
+  </div>
 </form>
 
 
 <p>Valore Form Paziente: {{ paziente.value | json }}</p>
 <p>Errori: {{paziente.errors | json}}</p>
-<!--qui si vede come si controllano gli stati delle form serve fidati non farti domanda -->
+<!--qui si vede come si controllano gli stati delle form serve fidati non farti domande -->
 <p>Modifica: 
     @if (paziente.dirty) {
         <span class="text-green-500">Modificato</span>
