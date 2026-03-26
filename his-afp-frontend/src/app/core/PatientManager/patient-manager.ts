@@ -1,14 +1,16 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { Paziente, PazienteDTO } from './Pazienti.model';
+import { PatientAdmission, PatientAdmissionRes, Paziente, PazienteDTO } from './Pazienti.model';
 import { HttpClient } from '@angular/common/http';
 import { APIResponse } from '../models/Response.model';
 import { environment } from '../../../environments/environment.development';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PatientManager {
   #http = inject(HttpClient);
+  readonly #router = inject(Router);
   #listaPZ = signal<Paziente[]>([]);
   #listaPzFiltered = signal<Paziente[]>(this.#listaPZ());
   listaPZ = this.#listaPzFiltered.asReadonly();
@@ -40,6 +42,18 @@ export class PatientManager {
       next: (res) => {
         const pz = res.data.map((p) => this.mapPazienteDTOtoPaziente(p));
         this.#listaPZ.set(pz);
+      },
+      error: (err) => {
+        console.error('Errore nel recupero dei pazienti:', err);
+      }
+    }
+    )
+  }
+
+  public admitPatient(pz: PatientAdmission){
+    this.#http.post<APIResponse<PatientAdmissionRes>>(`${environment.apiUrl}/admissions`, pz).subscribe({
+      next: (res) => {
+        this.#router.navigate([`/modifica-pz/${res.data.id}`])
       },
       error: (err) => {
         console.error('Errore nel recupero dei pazienti:', err);

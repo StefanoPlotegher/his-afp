@@ -2,17 +2,18 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { GestioneRisorse } from '../../core/Risorse/gestione-risorse';
 import { InputText } from 'primeng/inputtext';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { JsonPipe } from '@angular/common';
 import { Button } from 'primeng/button';
 import { Message } from 'primeng/message'
 import { DatePickerModule } from 'primeng/datepicker';
 import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
 import { FieldsetModule } from 'primeng/fieldset';
+import { PatientManager } from '../../core/PatientManager/patient-manager';
+import { PatientAdmission } from '../../core/PatientManager/Pazienti.model';
 
 @Component({
   selector: 'his-accettazione-pz',
-  imports: [InputText, ReactiveFormsModule, JsonPipe, Button, Message, DatePickerModule, SelectModule, TextareaModule, FieldsetModule],
+  imports: [InputText, ReactiveFormsModule, Button, Message, DatePickerModule, SelectModule, TextareaModule, FieldsetModule],
   templateUrl: './accettazione-pz.html',
   styleUrl: './accettazione-pz.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,6 +24,7 @@ export class AccettazionePz {
   //   nome: new FormControl('', [Validators.required]),
   //   cognome: new FormControl('', [Validators.required]),
   // });
+  patientManager = inject(PatientManager)
   readonly maxDate = new Date();
   readonly sexOption = [
     {
@@ -71,6 +73,9 @@ export class AccettazionePz {
   onSubmit() {
     if (this.paziente.valid) {
       console.log(this.paziente.value);
+      this.patientManager.admitPatient(
+        this.paziente.value as PatientAdmission
+      );
     } else {
       this.paziente.markAllAsTouched();
     }
