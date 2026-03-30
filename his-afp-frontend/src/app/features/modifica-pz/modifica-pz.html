@@ -331,7 +331,7 @@
     type="submit"
   />
   <p-button
-    (onClick)="paziente.reset()"
+    (onClick)="paziente.get('residenza')?.reset()"
     label="Reset"
     severity="warn"
     variant="outlined"

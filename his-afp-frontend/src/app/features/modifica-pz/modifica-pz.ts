@@ -60,6 +60,7 @@ export class ModificaPz {
           });
 
           this.paziente.get('anagrafica')?.disable();
+          this.paziente.get('sanitaria')?.disable();
         });
       }
     });
