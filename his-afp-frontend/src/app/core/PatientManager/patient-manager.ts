@@ -62,6 +62,17 @@ export class PatientManager {
     )
   }
 
+  public updatePatientInfo(pzId: number, residenza: Pick<PatientAdmission,'residenza'>){
+    this.#http.patch(`${environment.apiUrl}/patients/${pzId}`, residenza).subscribe({
+      next: (res) => {
+        this.#router.navigate([`/lista-pz`]);
+      },
+      error: (err) => {
+        console.error("Errore nell'aggiornamento dei pazienti:", err);
+      }
+    })
+  }
+
   //mapping da DTO a Paziente
   public mapPazienteDTOtoPaziente(pz: PazienteDTO):Paziente{
     return {

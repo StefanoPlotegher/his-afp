@@ -1,6 +1,6 @@
 import { httpResource } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, effect, inject, input, untracked } from '@angular/core';
-import { PazienteDTO } from '../../core/PatientManager/Pazienti.model';
+import { PatientAdmission, PazienteDTO } from '../../core/PatientManager/Pazienti.model';
 import { APIResponse } from '../../core/models/Response.model';
 import { Button } from "primeng/button";
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -12,6 +12,7 @@ import { TextareaModule } from 'primeng/textarea';
 import { SelectModule } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
 import { formatDate } from '@angular/common';
+import { PatientManager } from '../../core/PatientManager/patient-manager';
 
 @Component({
   selector: 'his-modifica-pz',
@@ -24,6 +25,7 @@ export class ModificaPz {
   gestioneRisorse = inject(GestioneRisorse);
   //Dobbiamo dirgli di accettare (nel senso di accogliere non di usare un'accetta) il valore dell'id del paziente
   patientId = input<string>();
+  patientManager = inject(PatientManager);
 
   patientReq = httpResource<APIResponse<PazienteDTO>>(() => `http://localhost:3000/admissions/${this.patientId()}`)
 
@@ -121,7 +123,7 @@ export class ModificaPz {
     onSubmit() {
       if (this.paziente.valid) {
         console.log(this.paziente.value);
-        //this.patientManager.admitPatient(this.paziente.value as PatientAdmission);
+        this.patientManager.updatePatientInfo(Number(this.patientId()) || -1, this.paziente.value.residenza as Pick<PatientAdmission,'residenza'>);
       } else {
         this.paziente.markAllAsTouched();
       }
