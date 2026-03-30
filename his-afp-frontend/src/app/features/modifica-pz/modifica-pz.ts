@@ -1,5 +1,5 @@
 import { httpResource } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, effect, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, input, untracked } from '@angular/core';
 import { PazienteDTO } from '../../core/PatientManager/Pazienti.model';
 import { APIResponse } from '../../core/models/Response.model';
 import { Button } from "primeng/button";
@@ -33,25 +33,30 @@ export class ModificaPz {
       if (this.patientId() === undefined){
         console.warn("PatientID is undefined, this is probably not what you want");
       }
-      if(pzVal?.data){
-        const data = pzVal.data;
-        this.paziente.patchValue({
-          anagrafica: {
-            nome: data.nome,
-            cognome: data.cognome,
-            dataNascita: formatDate(data.dataNascita, 'dd/MM/yyyy', 'en'),
-            sesso: data.sex,
-            codiceFiscale: data.codiceFiscale,
-          },
-          sanitaria: {
-            patologia: data.patologiaCode,
-            modArrivo: data.modalitaArrivoCode,
-            noteTriage: data.noteTriage,
-            codiceColore: data.coloreCode,
-          },
+
+      if (this.patientReq.hasValue()){
+        const data = this.patientReq.value().data;
+         untracked(() => {
+          this.paziente.patchValue({
+            anagrafica: {
+              nome: data.nome,
+              cognome: data.cognome,
+              dataNascita: formatDate(data.dataNascita, 'dd/MM/yyyy', 'en'),
+              sesso: data.sex,
+              codiceFiscale: data.codiceFiscale,
+            },
+            sanitaria: {
+              patologia: data.patologiaCode,
+              modArrivo: data.modalitaArrivoCode,
+              noteTriage: data.noteTriage,
+              codiceColore: data.coloreCode,
+            },
+          });
+
+          this.paziente.get('anagrafica')?.disable();
         });
       }
-    })
+    });
   }
 
   readonly maxDate = new Date();
