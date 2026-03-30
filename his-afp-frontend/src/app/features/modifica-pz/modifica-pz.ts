@@ -51,6 +51,12 @@ export class ModificaPz {
               noteTriage: data.noteTriage,
               codiceColore: data.coloreCode,
             },
+            residenza:{
+                via: data.indirizzoVia,
+                civico: data.indirizzoCivico,
+                comune: data.comune,
+                provincia: data.provincia,
+            }
           });
 
           this.paziente.get('anagrafica')?.disable();
@@ -86,6 +92,12 @@ export class ModificaPz {
       modArrivo: ['', [Validators.required]],
       noteTriage: ['', [Validators.required, Validators.maxLength(500)]],
     }),
+    residenza: this.#fb.group({
+        via: ['', [Validators.required]],
+        civico: ['', [Validators.required]],
+        comune: ['', [Validators.required]],
+        provincia: ['', [Validators.required]],
+    })
   });
 
   
