@@ -3,6 +3,7 @@ import { ListaPz } from './features/lista-pz/lista-pz';
 import { AccettazionePz } from './features/accettazione-pz/accettazione-pz';
 import { ModificaPz } from './features/modifica-pz/modifica-pz';
 import { StatoServizi } from './features/stato-servizi/stato-servizi';
+import { patientInfoResolver } from './core/Pazienti/resolver/patient-info-resolver';
 
 export const routes: Routes = [
     {
@@ -18,12 +19,16 @@ export const routes: Routes = [
         path: 'modifica-pz',
         //component: ModificaPz
         //sta roba qui sotto fa il lazy loading del componente, letteralmente lazy perché carica il componente solo quando si accede alla rotta non prima (ceh stra pigro in poche parole, low key gasa parecchio)
-        loadComponent: () => import('./features/modifica-pz/modifica-pz').then(m => m.ModificaPz)
+        loadComponent: () => import('./features/modifica-pz/modifica-pz').then(m => m.ModificaPz),
     },
     {
         //quando si cerca tipo un singolo utente per id è meglio usare i pathParams piuttosto che i queryParams. perché si zitto e accttalo perché stai accedendo direttamente ad una risorsa
         path: 'modifica-pz/:patientId',
-        loadComponent: () => import('./features/modifica-pz/modifica-pz').then(m => m.ModificaPz)
+        loadComponent: () => import('./features/modifica-pz/modifica-pz').then(m => m.ModificaPz),
+        resolve:{
+            //il resolver ci serve per risolvere i dati èrima di caricare la rotta così siamo più bravi
+            patientInfo: patientInfoResolver
+        }
     },
     {
         path: 'stato-servizi',

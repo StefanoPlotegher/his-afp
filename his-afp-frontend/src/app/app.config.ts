@@ -3,7 +3,7 @@ import { provideRouter, withComponentInputBinding } from '@angular/router';
 import Aura from '@primeuix/themes/aura';
 import { providePrimeNG } from 'primeng/config';
 import { routes } from './app.routes';
-import { PatientManager } from './core/PatientManager/patient-manager';
+import { PatientManager } from './core/Pazienti/patient-manager';
 import { GestioneRisorse } from './core/Risorse/gestione-risorse';
 
 export const appConfig: ApplicationConfig = {

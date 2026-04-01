@@ -8,8 +8,8 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
 import { FieldsetModule } from 'primeng/fieldset';
-import { PatientManager } from '../../core/PatientManager/patient-manager';
-import { PatientAdmission } from '../../core/PatientManager/Pazienti.model';
+import { PatientManager } from '../../core/Pazienti/patient-manager';
+import { PatientAdmission } from '../../core/Pazienti/Pazienti.model';
 
 @Component({
   selector: 'his-accettazione-pz',

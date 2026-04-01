@@ -1,6 +1,6 @@
 import { httpResource } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, effect, inject, input, untracked } from '@angular/core';
-import { PatientAdmission, PazienteDTO } from '../../core/PatientManager/Pazienti.model';
+import { PatientAdmission, PazienteDTO } from '../../core/Pazienti/Pazienti.model';
 import { APIResponse } from '../../core/models/Response.model';
 import { Button } from "primeng/button";
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -12,7 +12,7 @@ import { TextareaModule } from 'primeng/textarea';
 import { SelectModule } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
 import { formatDate } from '@angular/common';
-import { PatientManager } from '../../core/PatientManager/patient-manager';
+import { PatientManager } from '../../core/Pazienti/patient-manager';
 
 @Component({
   selector: 'his-modifica-pz',
@@ -25,19 +25,19 @@ export class ModificaPz {
   gestioneRisorse = inject(GestioneRisorse);
   //Dobbiamo dirgli di accettare (nel senso di accogliere non di usare un'accetta) il valore dell'id del paziente
   patientId = input<string>();
+  patientInfo = input.required<APIResponse<PazienteDTO>>();
   patientManager = inject(PatientManager);
 
   patientReq = httpResource<APIResponse<PazienteDTO>>(() => `http://localhost:3000/admissions/${this.patientId()}`)
 
   constructor(){
     effect(() =>{
-      const pzVal = this.patientReq.value();
       if (this.patientId() === undefined){
-        console.warn("PatientID is undefined, this is probably not what you want");
+        console.warn("PatientID is undefined, this is probably not what you want dumbass");
       }
 
+      const data = this.patientInfo().data;
       if (this.patientReq.hasValue()){
-        const data = this.patientReq.value().data;
          untracked(() => {
           this.paziente.patchValue({
             anagrafica: {

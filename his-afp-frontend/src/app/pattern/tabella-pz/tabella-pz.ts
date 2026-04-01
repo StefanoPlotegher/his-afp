@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, effect, inject, model } from '@angular/core';
-import { PatientManager } from '../../core/PatientManager/patient-manager';
+import { PatientManager } from '../../core/Pazienti/patient-manager';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { Button } from "primeng/button";
