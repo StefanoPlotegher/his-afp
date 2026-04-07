@@ -5,7 +5,6 @@ import bcrypt from 'bcryptjs';
 export const retrieveAllStaffFn = catchAsync(async (req, res) => {
 	const query = `SELECT id, username, role, is_active as "isActive"
                    FROM users
---                    WHERE is_active = true
                    ORDER BY username ASC`;
 	const result = await pool.query(query);
 	res.status(200).json({status: 'success', results: result.rowCount, data: result.rows});
@@ -36,7 +35,7 @@ export const deactivateUserFn = catchAsync(async (req, res, next) => {
                                      SET is_active = false
                                      WHERE id = $1
                                      RETURNING id`, [id]);
-	if (result.rowCount === 0) return next(new AppError('Utente non trovato', 404));
+	if (result.rowCount === 0) return next(new AppError('Operatore non trovato', 404));
 	res.status(200).json({status: 'success', message: 'Operatore disattivato correttamente'});
 });
 
@@ -46,6 +45,6 @@ export const activateUserFn = catchAsync(async (req, res, next) => {
                                      SET is_active = true
                                      WHERE id = $1
                                      RETURNING id`, [id]);
-	if (result.rowCount === 0) return next(new AppError('Utente non trovato', 404));
+	if (result.rowCount === 0) return next(new AppError('Operatore non trovato', 404));
 	res.status(200).json({status: 'success', message: 'Operatore attivato correttamente'});
 });
