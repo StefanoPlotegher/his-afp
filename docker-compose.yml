@@ -30,5 +30,42 @@ services:
       - db
     restart: always
 
+  fe-sio:
+    build:
+      context: ./his-afp-frontend
+      dockerfile: Dockerfile
+    image: his-afp-frontend:${SVI_VERSION:-latest}
+    container_name: fe-sio
+
+  fe-prod:
+    build:
+      context: ./his-afp-frontend
+      dockerfile: Dockerfile
+    image: his-afp-frontend:${PROD_VERSION:-latest}
+    container_name: fe-prod
+    
+  fe-test:
+    build:
+      context: ./his-afp-frontend
+      dockerfile: Dockerfile
+    image: his-afp-frontend:${TEST_VERSION:-latest}
+    container_name: fe-test
+
+  gateway:
+    image: nginx:alpine
+    container_name: sio-gateway
+    ports:
+      - "80:80"
+      - "8999:8999"
+      - "8080:8080"
+    volumes:
+      - ./gateway:/etc/nginx/conf.d/:ro
+    depends_on:
+      - fe-sio
+      - fe-prod
+      - fe-test
+    restart: always
+
+
 volumes:
   pg_data:
