@@ -11,4 +11,6 @@ FROM nginx:alpine AS hosting
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist/his-afp-frontend/browser /usr/share/nginx/html
 
+CMD ["/bin/sh", "-c", "envsubst < /usr/share/nginx/html/env.template.js > /usr/share/nginx/html/env.js && exec nginx -g 'daemon off;'"]
+
 EXPOSE 80

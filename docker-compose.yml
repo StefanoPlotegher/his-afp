@@ -36,6 +36,9 @@ services:
       dockerfile: Dockerfile
     image: his-afp-frontend:${SVI_VERSION:-latest}
     container_name: fe-sio
+    environment:
+      APP_ENV: "SVI"
+      APP_VERSION: "${SVI_VERSION}"
 
   fe-prod:
     build:
@@ -43,13 +46,19 @@ services:
       dockerfile: Dockerfile
     image: his-afp-frontend:${PROD_VERSION:-latest}
     container_name: fe-prod
-    
+    environment:
+      APP_ENV: "PROD"
+      APP_VERSION: "${PROD_VERSION}"
+
   fe-test:
     build:
       context: ./his-afp-frontend
       dockerfile: Dockerfile
     image: his-afp-frontend:${TEST_VERSION:-latest}
     container_name: fe-test
+    environment:
+      APP_ENV: "TEST"
+      APP_VERSION: "${TEST_VERSION}"
 
   gateway:
     image: nginx:alpine
