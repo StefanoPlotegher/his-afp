@@ -38,7 +38,7 @@ export class PatientManager {
 
   //fetch dei pazienti http
   public fetchPazienti(){
-    this.#http.get<APIResponse<PazienteDTO[]>>(`${environment.apiUrl}/admissions`).subscribe({
+    this.#http.get<APIResponse<PazienteDTO[]>>(`/api/admissions`).subscribe({
       next: (res) => {
         const pz = res.data.map((p) => this.mapPazienteDTOtoPaziente(p));
         this.#listaPZ.set(pz);
@@ -51,7 +51,7 @@ export class PatientManager {
   }
 
   public admitPatient(pz: PatientAdmission){
-    this.#http.post<APIResponse<PatientAdmissionRes>>(`${environment.apiUrl}/admissions`, pz).subscribe({
+    this.#http.post<APIResponse<PatientAdmissionRes>>(`/api/admissions`, pz).subscribe({
       next: (res) => {
         this.#router.navigate([`/modifica-pz/${res.data.id}`])
       },
@@ -63,7 +63,7 @@ export class PatientManager {
   }
 
   public updatePatientInfo(pzId: number, residenza: Pick<PatientAdmission,'residenza'>){
-    this.#http.patch(`${environment.apiUrl}/patients/${pzId}`, residenza).subscribe({
+    this.#http.patch(`/api/patients/${pzId}`, residenza).subscribe({
       next: (res) => {
         this.#router.navigate([`/lista-pz`]);
       },

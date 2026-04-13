@@ -20,7 +20,7 @@ export class SystemStatus {
 
   public fetchStatoAPI(){
     //chiamata http
-    this.#http.get<APIResponse<HealthStatus>>("http://localhost:3000/health").subscribe({
+    this.#http.get<APIResponse<HealthStatus>>("/api/health").subscribe({
       //risposta positiva
       next:(res) => {
         this.#statoAPI.set(res.data);
