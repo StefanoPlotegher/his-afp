@@ -23,7 +23,7 @@ export const patientInfoResolver: ResolveFn<Observable<APIResponse<PazienteDTO> 
   const router = inject(Router);
   const patientId = route.paramMap.get('patientId');
 
-  return http.get<APIResponse<PazienteDTO>>(`${environment.apiUrl}/admissions/${patientId}`).pipe(
+  return http.get<APIResponse<PazienteDTO>>(`/api/admissions/${patientId}`).pipe(
     catchError((error) => {
       console.error('Error fetching patient info:', error);
       router.navigate(['/accettazione-pz']);

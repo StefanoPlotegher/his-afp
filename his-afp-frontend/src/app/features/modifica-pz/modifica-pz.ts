@@ -28,7 +28,9 @@ export class ModificaPz {
   patientInfo = input.required<APIResponse<PazienteDTO>>();
   patientManager = inject(PatientManager);
 
-  patientReq = httpResource<APIResponse<PazienteDTO>>(() => `http://localhost:3000/admissions/${this.patientId()}`)
+  patientReq = httpResource<APIResponse<PazienteDTO>>(() => `/api/admissions/${this.patientId()}`, {
+    debugName: 'PatientInfo',
+  })
 
   constructor(){
     effect(() =>{
