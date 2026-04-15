@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { PatientAdmission, PatientAdmissionRes, Paziente, PazienteDTO } from './Pazienti.model';
+import { Anagrafica, PatientAdmission, PatientAdmissionRes, Paziente, PazienteDTO } from './Pazienti.model';
 import { HttpClient } from '@angular/common/http';
 import { APIResponse } from '../models/Response.model';
 import { environment } from '../../../environments/environment';
@@ -71,6 +71,10 @@ export class PatientManager {
         console.error("Errore nell'aggiornamento dei pazienti:", err);
       }
     })
+  }
+
+  public ricefcaPaziente(cf: string){
+    return this.#http.get<APIResponse<Anagrafica>>(`${environment.apiUrl}/patients/search?cf=${cf}`);
   }
 
   //mapping da DTO a Paziente

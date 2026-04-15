@@ -59,3 +59,18 @@ export interface PatientAdmissionRes{
   id: number;
   braccialetto: string;
 }
+
+
+export interface Anagrafica {
+  id: number
+  codice_fiscale: string
+  nome: string
+  cognome: string
+  data_nascita: string
+  sex: string
+  indirizzo_via: string
+  indirizzo_civico: string
+  comune: string
+  provincia: string
+  created_at: string
+}

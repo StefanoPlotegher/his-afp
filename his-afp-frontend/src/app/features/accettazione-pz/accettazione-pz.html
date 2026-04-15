@@ -90,6 +90,11 @@
         pInputText
         type="text"
       />
+      @if (paziente.get('anagrafica.codiceFiscale')?.pending) {
+        <p-message severity="warn" variant="simple">
+          OOOOH, fai calmo eh, stiamo guardando se il CF esiste già, stai fermo, prenditi un caffe o quello che vuoi, ma stai fermo con il form va che ti vedo!!!!
+        </p-message>
+      }
       
       @if (checkFormControl('anagrafica.codiceFiscale')) {
         @if (checkFormControlError('anagrafica.codiceFiscale', 'required')) {
@@ -100,6 +105,11 @@
         @if (checkFormControlError('anagrafica.codiceFiscale', 'pattern')) {
           <p-message severity="error" variant="simple">
             Scemooooo, devi mettere il codice fiscale con il giusto formato dai su, non posso stare qui ogni volta a controllare che tu non faccia cazzate
+          </p-message>
+        }
+        @if (checkFormControlError('anagrafica.codiceFiscale', 'cfExists')) {
+          <p-message severity="error" variant="simple">
+            Ayo, va che questo codice fiscale esiste eh, non serve che rifai tutto dai
           </p-message>
         }
       }

@@ -10,6 +10,7 @@ import { TextareaModule } from 'primeng/textarea';
 import { FieldsetModule } from 'primeng/fieldset';
 import { PatientManager } from '../../core/Pazienti/patient-manager';
 import { PatientAdmission } from '../../core/Pazienti/Pazienti.model';
+import { AsyncCFCheck } from '../../core/Pazienti/asyncCFCheck';
 
 @Component({
   selector: 'his-accettazione-pz',
@@ -43,7 +44,8 @@ export class AccettazionePz {
       nome: ['', [Validators.required, Validators.minLength(2)]],
       cognome: ['', [Validators.required]],
       dataNascita: ['', [Validators.required]],
-      codiceFiscale: ['', [Validators.required, Validators.pattern('[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]')]],
+      codiceFiscale: ['', [Validators.required, Validators.pattern('[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]')],
+        [AsyncCFCheck.check(this.patientManager)]],
       sesso: ['', [Validators.required]],
     }),
     sanitaria: this.#fb.group({
