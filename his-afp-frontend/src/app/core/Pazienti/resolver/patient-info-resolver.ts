@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { ResolveFn, Router } from '@angular/router';
-import { environment } from '../../../../environments/environment.development';
+import { environment } from '../../../../environments/environment';
 import { catchError, Observable, of } from 'rxjs';
 import { APIResponse } from '../../models/Response.model';
 import { PazienteDTO } from '../Pazienti.model';

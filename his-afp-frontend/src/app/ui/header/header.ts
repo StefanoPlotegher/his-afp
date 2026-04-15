@@ -3,7 +3,7 @@ import { ButtonModule } from "primeng/button";
 import { DarkmodeSelector } from "../darkmode-selector/darkmode-selector";
 import { RouterLink } from '@angular/router';
 import { DividerModule } from "primeng/divider";
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { TagModule } from 'primeng/tag';
 
 @Component({

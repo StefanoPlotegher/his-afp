@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { ArrivalMode, Pathology, TriageColor } from './risorse.models';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { APIResponse } from '../models/Response.model';
 
 @Injectable({
