@@ -1,0 +1,16 @@
+<p>Tabella Staff</p>
+
+<p>Staff presente in PS: {{ StaffManager.staff().length }}</p>
+
+<div
+class="flex flex-wrap flex-row gap-4 p-4">
+
+@for (st of StaffManager.staff(); track st.id){
+    <his-card-staff
+        [staff]="st"
+    />
+}@empty {
+    <h1>Nessun staff in attesa</h1>
+}
+
+</div>
