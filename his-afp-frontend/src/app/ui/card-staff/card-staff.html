@@ -1,0 +1,16 @@
+<div class="mb-4 p-4">
+  <p-card
+    class="w-2xs border-l-8 transition-all"
+    [class.opacity-60]="!staff().isActive"
+    [class.grayscale]="!staff().isActive"
+    [header]="staff().username"
+    [subheader]="staff().role"
+  >
+    <ng-template #footer>
+      <p-button
+        [label]="staff().isActive ? 'Disattiva' : 'Attiva'"
+        (onClick)="StaffManager.changeStaffStatus(staff().id)"
+      />
+    </ng-template>
+  </p-card>
+</div>
