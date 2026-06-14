@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { TabellaStaff } from '../../pattern/tabella-staff/tabella-staff';
 
 @Component({
   selector: 'his-staff',
-  imports: [],
+  imports: [TabellaStaff],
   templateUrl: './staff.html',
   styleUrl: './staff.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
