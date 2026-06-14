@@ -22,4 +22,17 @@ export class StaffManager {
       }
     })
   }
+
+  public changeStaffStatus(staffId: number){
+    this.#http.patch(`/api/users/${staffId}/deactivate`, { id: staffId }).subscribe({
+      next: (res) => {
+        this.#staff.update((staff) => {
+          return staff.map((s) => s.id === staffId ? { ...s, isActive: !s.isActive } : s);
+        });
+      },
+      error: (err) => {
+        console.error('Errore nella modifica dello stato dello staff:', err);
+      }
+    });
+  }
 }
