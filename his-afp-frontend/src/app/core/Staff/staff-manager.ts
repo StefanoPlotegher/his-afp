@@ -24,6 +24,7 @@ export class StaffManager {
   }
 
   public changeStaffStatus(staffId: number){
+    if (this.#staff().find(s => s.id === staffId)?.isActive) {
     this.#http.patch(`/api/users/${staffId}/deactivate`, { id: staffId }).subscribe({
       next: (res) => {
         this.#staff.update((staff) => {
@@ -32,6 +33,23 @@ export class StaffManager {
       },
       error: (err) => {
         console.error('Errore nella modifica dello stato dello staff:', err);
+        }
+      });
+    }else{
+      this.#http.patch(`/api/users/${staffId}/activate`, { id: staffId }).subscribe({
+        next: (res) => {
+          this.#staff.update((staff) => {
+            return staff.map((s) => s.id === staffId ? { ...s, isActive: !s.isActive } : s);
+          });
+        },
+        error: (err) => {
+          console.error('Errore nella modifica dello stato dello staff:', err);
+        }
+      });
+    }
+  }
+
+
       }
     });
   }
