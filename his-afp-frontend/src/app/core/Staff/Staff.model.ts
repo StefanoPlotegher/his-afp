@@ -4,9 +4,14 @@ export interface Staff {
     role: string,
     isActive: boolean
 
-}export interface StaffAdd {
+}
+
+export interface StaffAdd {
     username: string,
     password: string,
     role: string,
-    
+}
+
+export interface UsernameCheckResponse {
+    available: boolean;
 }

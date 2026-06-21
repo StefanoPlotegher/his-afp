@@ -8,6 +8,7 @@ import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
 import { FieldsetModule } from 'primeng/fieldset';
 import { PasswordModule } from 'primeng/password';
+import { AsyncUserCheck } from '../../core/Staff/asyncUserCheck';
 import { StaffAdd } from '../../core/Staff/Staff.model';
 import { StaffManager } from '../../core/Staff/staff-manager';
 
@@ -42,7 +43,14 @@ export class addStaff {
   ]
 
   staff = this.#fb.group({
-    username: ['', [Validators.required, Validators.minLength(2)]],
+    username: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(2)
+      ],
+      [AsyncUserCheck.check(this.staffManager)]
+    ],
     password: [
       '',
       [

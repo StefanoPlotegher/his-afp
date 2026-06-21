@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { Staff } from './Staff.model';
+import { Staff, UsernameCheckResponse } from './Staff.model';
 import { APIResponse } from '../models/Response.model';
 import { StaffAdd } from './Staff.model';
 import { Router } from '@angular/router';
@@ -63,4 +63,8 @@ export class StaffManager {
       }
     });
   }
+
+    public ricercaStaff(st: string){
+      return this.#http.get<APIResponse<UsernameCheckResponse>>(`api/users/check/${st}`);
+    }
 }

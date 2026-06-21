@@ -29,6 +29,11 @@
             Frate no dai, non puoi scrivere più di {{checkFormControlError('username', 'maxlength').requiredLength}} caratteri svegliati
           </p-message>
         }
+        @if (checkFormControlError('username', 'usernameTaken')) {
+          <p-message severity="error" variant="simple">
+            Questo username è già utilizzato, ain't no double username in my hospital man.
+          </p-message>
+        }
       }
     </div>
         <div class="flex flex-col p-4">
