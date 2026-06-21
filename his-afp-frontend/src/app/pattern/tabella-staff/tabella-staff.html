@@ -1,6 +1,9 @@
 <p>Tabella Staff</p>
 
-<p>Staff presente in PS: {{ StaffManager.staff().length }}</p>
+<p-button 
+    (onClick)="newStaff()"
+    label="Aggiungi Staff"
+/>
 
 <div
 class="flex flex-wrap flex-row gap-4 p-4">
@@ -10,7 +13,7 @@ class="flex flex-wrap flex-row gap-4 p-4">
         [staff]="st"
     />
 }@empty {
-    <h1>Nessun staff in attesa</h1>
+    <h1>Nessuno staff presente in lista</h1>
 }
 
 </div>

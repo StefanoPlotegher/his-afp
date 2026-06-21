@@ -16,6 +16,10 @@ export const routes: Routes = [
         loadComponent: () => import('./features/accettazione-pz/accettazione-pz').then(m => m.AccettazionePz)
     },
     {
+        path: 'add-staff',
+        loadComponent: () => import('./features/add-staff/add-staff').then(m => m.addStaff)
+    },
+    {
         path: 'modifica-pz',
         //component: ModificaPz
         //sta roba qui sotto fa il lazy loading del componente, letteralmente lazy perché carica il componente solo quando si accede alla rotta non prima (ceh stra pigro in poche parole, low key gasa parecchio)
