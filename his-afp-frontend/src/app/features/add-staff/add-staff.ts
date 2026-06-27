@@ -9,7 +9,7 @@ import { TextareaModule } from 'primeng/textarea';
 import { FieldsetModule } from 'primeng/fieldset';
 import { PasswordModule } from 'primeng/password';
 import { AsyncUserCheck } from '../../core/Staff/asyncUserCheck';
-import { StaffAdd } from '../../core/Staff/Staff.model';
+import { Role, StaffAdd } from '../../core/Staff/Staff.model';
 import { StaffManager } from '../../core/Staff/staff-manager';
 
 @Component({
@@ -29,11 +29,11 @@ export class addStaff {
   readonly #fb = inject(FormBuilder);
   readonly roleOptions = [
     {
-      code: 'DOC',
+      code : 'DOC',
       desc: 'Medico'
     },
     {
-      code: 'INF',
+      code : 'INF',
       desc: 'Infermiere'
     },
     {
@@ -85,7 +85,7 @@ export class addStaff {
     return {
       username: this.staff.get('username')?.value ?? '',
       password: this.staff.get('password')?.value ?? '',
-      role: this.staff.get('role')?.value ?? ''
+      role: this.staff.get('role')?.value as Role ?? ''
     };
   }
 
