@@ -1,8 +1,4 @@
 import { Routes } from '@angular/router';
-import { ListaPz } from './features/lista-pz/lista-pz';
-import { AccettazionePz } from './features/accettazione-pz/accettazione-pz';
-import { ModificaPz } from './features/modifica-pz/modifica-pz';
-import { StatoServizi } from './features/stato-servizi/stato-servizi';
 import { patientInfoResolver } from './core/Pazienti/resolver/patient-info-resolver';
 
 export const routes: Routes = [
