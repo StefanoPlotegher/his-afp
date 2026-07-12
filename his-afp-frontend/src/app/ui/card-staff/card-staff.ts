@@ -52,4 +52,18 @@ export class CardStaff {
   cancel() {
     this.close.emit();
   }
+
+
+  public coloreRuolo(role: Role): string {
+    switch (role) {
+      case 'DOC':
+        return 'border-blue-600';
+      case 'INF':
+        return 'border-green-600';
+      case 'AMM':
+        return 'border-gray-600';
+      default:
+        return 'border-gray-600';
+    }
+  }
 }
