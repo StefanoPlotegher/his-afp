@@ -13,12 +13,15 @@ export class StaffManager {
   #staff = signal<Staff[]>([]);
   staff = this.#staff.asReadonly();
   #router = inject(Router);
+  #orderedStaff = signal<Staff[]>([]);
+  orderedStaff = this.#orderedStaff.asReadonly();
 
 
   public fetchStaff(){
     this.#http.get<APIResponse<Staff[]>>("/api/users").subscribe({
       next: (res) => {
         this.#staff.set(res.data);
+        this.orderStaff();
       },
       error: (err) => {
         console.error('Errore nel recupero dello staff:', err);
@@ -33,6 +36,7 @@ export class StaffManager {
           this.#staff.update((staff) => {
             return staff.map((s) => s.id === staffId ? { ...s, isActive: !s.isActive } : s);
           });
+          this.orderStaff();
         },
         error: (err) => {
           console.error('Errore nella modifica dello stato dello staff:', err);
@@ -44,6 +48,7 @@ export class StaffManager {
           this.#staff.update((staff) => {
             return staff.map((s) => s.id === staffId ? { ...s, isActive: !s.isActive } : s);
           });
+          this.orderStaff();
         },
         error: (err) => {
           console.error('Errore nella modifica dello stato dello staff:', err);
@@ -74,10 +79,32 @@ export class StaffManager {
         this.#staff.update((staff) => {
           return staff.map((s) => s.id === staffId ? { ...s, role: newRole } : s);
         });
+        this.orderStaff();
       },
       error: (err) => {
         console.error('Errore nella modifica del ruolo dello staff:', err);
       }
     });
+  }
+
+  public orderStaff(){
+    const staff = [...this.#staff()];
+    const getName = (s: Staff) => (s as any).name ?? (s as any).username ?? (s as any).email ?? '';
+
+    staff.sort((a, b) => {
+      if (a.isActive !== b.isActive) return a.isActive ? -1 : 1;
+
+      const roleA = String(a.role ?? '').toLowerCase();
+      const roleB = String(b.role ?? '').toLowerCase();
+      if (roleA !== roleB) return roleA < roleB ? -1 : 1;
+
+      const nameA = getName(a).toLowerCase();
+      const nameB = getName(b).toLowerCase();
+      if (nameA < nameB) return -1;
+      if (nameA > nameB) return 1;
+      return 0;
+    });
+
+    this.#orderedStaff.set(staff);
   }
 }
