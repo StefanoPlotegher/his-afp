@@ -25,7 +25,81 @@
         }
       </div>
 
-      
+      @if (searchMode() === 'advanced') {
+        <div class="flex flex-col p-4">
+          <label for="nome">Nome:</label>
+          <input
+            id="nome"
+            formControlName="nome"
+            pInputText
+            type="text"
+            class="w-full"
+            [invalid]="checkFormControl('nome')"
+          />
+          @if (checkFormControl('nome')) {
+            @if (checkFormControlError('nome', 'required')) {
+              <p-message severity="error" variant="simple">
+                Il campo nome è obbligatorio
+              </p-message>
+            }
+            @if (checkFormControlError('nome', 'minlength')) {
+              <p-message severity="error" variant="simple">
+                Il nome deve contenere almeno
+                {{ checkFormControlError('nome', 'minlength').requiredLength }} caratteri
+              </p-message>
+            }
+          }
+        </div>
+
+        <div class="flex flex-col p-4">
+          <label for="cognome">Cognome:</label>
+          <input
+            id="cognome"
+            formControlName="cognome"
+            pInputText
+            type="text"
+            class="w-full"
+            [invalid]="checkFormControl('cognome')"
+          />
+          @if (checkFormControl('cognome')) {
+            @if (checkFormControlError('cognome', 'required')) {
+              <p-message severity="error" variant="simple">
+                Il campo cognome è obbligatorio
+              </p-message>
+            }
+          }
+        </div>
+
+        <div class="flex flex-col p-4">
+          <label for="dataNascita">Data di Nascita:</label>
+          <p-date-picker
+            id="dataNascita"
+            formControlName="dataNascita"
+            type="date"
+            dateFormat="dd/mm/yy"
+            [maxDate]="maxDate"
+            placeholder="dd/mm/yyyy"
+            class="w-full"
+            [invalid]="checkFormControl('dataNascita')"
+          />
+          @if (checkFormControl('dataNascita')) {
+            @if (checkFormControlError('dataNascita', 'required')) {
+              <p-message severity="error" variant="simple">
+                Il campo data di nascita è obbligatorio
+              </p-message>
+            }
+          }
+        </div>
+      }
+
+      <div class="flex flex-col p-4">
+        <p-button
+          [label]="searchMode() === 'cf' ? 'Ricerca Avanzata (big up per te che sai tutte queste cose, tranne il codice fiscale quindi lame)' : 'Ricerca Base (lame)'"
+          (onClick)="toggleSearchMode()"
+          type="button"
+          variant="outlined"
+        />
+      </div>
     </p-fieldset>
   </div>
 

@@ -5,6 +5,7 @@ import { Button } from 'primeng/button';
 import { Message } from 'primeng/message';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FieldsetModule } from 'primeng/fieldset';
+import { PatientManager } from '../../core/Pazienti/patient-manager';
 
 @Component({
   selector: 'his-ricerca-pz',
@@ -15,10 +16,41 @@ import { FieldsetModule } from 'primeng/fieldset';
 })
 export class RicercaPz {
   readonly #fb = inject(FormBuilder);
+  searchMode = signal<'cf' | 'advanced'>('cf');
+  readonly maxDate = new Date();
+  readonly patientManager = inject(PatientManager);
 
-  ricerca = this.#fb.control({
-    cf: ['', [Validators.required, Validators.pattern('[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]')]]
+  ricerca = this.#fb.group({
+    cf: ['', [Validators.required, Validators.pattern('[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]')]],
+    nome: [{ value: '', disabled: true }],
+    cognome: [{ value: '', disabled: true }],
+    dataNascita: [{ value: '', disabled: true }],
   });
+
+  toggleSearchMode() {
+    if (this.searchMode() === 'cf') {
+      this.searchMode.set('advanced');
+      this.ricerca.get('cf')?.disable();
+      this.ricerca.get('nome')?.enable();
+      this.ricerca.get('cognome')?.enable();
+      this.ricerca.get('dataNascita')?.enable();
+      this.ricerca.get('nome')?.setValidators([Validators.required, Validators.minLength(2)]);
+      this.ricerca.get('cognome')?.setValidators([Validators.required]);
+      this.ricerca.get('dataNascita')?.setValidators([Validators.required]);
+    } else {
+      this.searchMode.set('cf');
+      this.ricerca.get('cf')?.enable();
+      this.ricerca.get('nome')?.disable();
+      this.ricerca.get('cognome')?.disable();
+      this.ricerca.get('dataNascita')?.disable();
+      this.ricerca.get('nome')?.clearValidators();
+      this.ricerca.get('cognome')?.clearValidators();
+      this.ricerca.get('dataNascita')?.clearValidators();
+    }
+    Object.keys(this.ricerca.controls).forEach((key) =>
+      this.ricerca.get(key)?.updateValueAndValidity()
+    );
+  }
 
   checkFormControl(control: string) {
     const fc = this.ricerca.get(control);
@@ -34,12 +66,40 @@ export class RicercaPz {
   }
 
   resetForm() {
+    if (this.searchMode() === 'advanced') {
+      this.searchMode.set('cf');
+      this.ricerca.get('cf')?.enable();
+      this.ricerca.get('nome')?.disable();
+      this.ricerca.get('cognome')?.disable();
+      this.ricerca.get('dataNascita')?.disable();
+      this.ricerca.get('nome')?.clearValidators();
+      this.ricerca.get('cognome')?.clearValidators();
+      this.ricerca.get('dataNascita')?.clearValidators();
+      Object.keys(this.ricerca.controls).forEach((key) =>
+        this.ricerca.get(key)?.updateValueAndValidity()
+      );
+    }
     this.ricerca.reset();
   }
 
+  private toLocalDateTimeString(date?: Date | string | null): string {
+  if (!date || typeof date === 'string') return '';
+  const anno = date.getFullYear();
+  const mese = String(date.getMonth() + 1).padStart(2, '0');
+  const giorno = String(date.getDate()).padStart(2, '0'); 
+
+  return `${anno}-${mese}-${giorno}T00:00:00`;
+  // es. "2026-07-14T00:00:00"
+}
+
   onSubmit() {
     if (this.ricerca.valid) {
-      console.log(this.ricerca.value);
+      console.log(this.patientManager.ricefcaPaziente(
+        this.ricerca.get('cf')?.value,
+        this.ricerca.get('nome')?.value,
+        this.ricerca.get('cognome')?.value,
+        this.toLocalDateTimeString(this.ricerca.get('dataNascita')?.value)
+      ));
     } else {
       this.ricerca.markAllAsTouched();
     }
