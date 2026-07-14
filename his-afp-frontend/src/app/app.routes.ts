@@ -12,8 +12,8 @@ export const routes: Routes = [
         loadComponent: () => import('./features/lista-pz/lista-pz').then(m => m.ListaPz)
     },
     {
-        path: 'accettazione-pz',
-        loadComponent: () => import('./features/accettazione-pz/accettazione-pz').then(m => m.AccettazionePz)
+        path: 'ricerca-pz',
+        loadComponent: () => import('./features/ricerca-pz/ricerca-pz').then(m => m.RicercaPz)
     },
     {
         path: 'modifica-pz',
