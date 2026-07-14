@@ -73,8 +73,13 @@ export class PatientManager {
     })
   }
 
-  public ricefcaPaziente(cf: string){
-    return this.#http.get<APIResponse<Anagrafica>>(`${environment.apiUrl}/patients/search?cf=${cf}`);
+  public ricefcaPaziente(cf?: string, nome?: string, cognome?: string, dataNascita?: string){
+    let url = `/api/patients/search?`;
+    if (cf) url += `cf=${cf}`;
+    if (nome) url += `&nome=${nome}`;
+    if (cognome) url += `&cognome=${cognome}`;
+    if (dataNascita) url += `&dataNascita=${dataNascita}`;
+    return this.#http.get<APIResponse<Anagrafica>>(url);
   }
 
   //mapping da DTO a Paziente
