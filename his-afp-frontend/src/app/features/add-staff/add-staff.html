@@ -1,0 +1,141 @@
+<form (submit)="onSubmit()" [formGroup]="staff">
+
+
+  <div class="flex flex-row flex-wrap gap-8 justify-center">
+    <p-fieldset legend="Dati Staff" class="w-96">
+    <div class="flex flex-col p-4">
+      <label for="username">Username:</label>
+      <input
+        [invalid]="checkFormControl('username')"
+        class="w-2xs"
+        formControlName="username"
+        id="username"
+        pInputText
+        type="text"
+      />
+      @if (checkFormControl('username')) {
+        @if (checkFormControlError('username', 'required')) {
+          <p-message severity="error" variant="simple">
+            Il campo username è obbligatorio come per la FIFA favorire l'Argentina di quel fenomeno di Messi (perché sì nonostante tutto resta IL fenomeno)
+          </p-message>
+        }
+        @if (checkFormControlError('username', 'minlength')) {
+          <p-message severity="error" variant="simple">
+            Che idiota, immagina scrivere come username meno di {{checkFormControlError('username', 'minlength').requiredLength}} caratteri e essere convinto che vada bene
+          </p-message>
+        }
+        @if (checkFormControlError('username', 'maxlength')) {
+          <p-message severity="error" variant="simple">
+            Frate no dai, non puoi scrivere più di {{checkFormControlError('username', 'maxlength').requiredLength}} caratteri svegliati
+          </p-message>
+        }
+        @if (checkFormControlError('username', 'usernameTaken')) {
+          <p-message severity="error" variant="simple">
+            Questo username è già utilizzato, ain't no double username in my hospital man.
+          </p-message>
+        }
+      }
+    </div>
+        <div class="flex flex-col p-4">
+      <label for="password">Password:</label>
+      <p-password
+        formControlName="password"
+        [toggleMask]="true"
+        [feedback]="false"
+        [invalid]="checkFormControl('password')"
+        />
+      @if (checkFormControl('password')) {
+        @if (checkFormControlError('password', 'required')) {
+          <p-message severity="error" variant="simple">
+            Il campo password è obbligatorio come insultare il proprio paese per poi difenderlo a spada tratta appena superato il confine
+          </p-message>
+        }
+        @if (checkFormControlError('password', 'minlength')) {
+          <p-message severity="error" variant="simple">
+            La password deve contenere almeno 8 caratteri uno in più del sacro numero
+          </p-message>
+        }
+        @if (checkFormControlError('password', 'uppercase')) {
+          <p-message severity="error" variant="simple">
+            La password deve contenere almeno una maiuscola  (una big ass lettera)
+          </p-message>
+        }
+        @if (checkFormControlError('password', 'lowercase')) {
+          <p-message severity="error" variant="simple">
+            La password deve contenere almeno una minuscola piccola piccola piccola come la tua autostima (se legge il prof just kidding of course)
+          </p-message>
+        }
+        @if (checkFormControlError('password', 'number')) {
+          <p-message severity="error" variant="simple">
+            La password deve contenere almeno un numero, sai i numeri vero?
+          </p-message>
+        }
+        @if (checkFormControlError('password', 'special')) {
+          <p-message severity="error" variant="simple">
+            La password deve contenere almeno un carattere speciale come te o come la salsa vedi tu se vuoi offenderti
+          </p-message>
+        }
+      }
+    </div>
+        <div class="flex flex-col p-4">
+      <label for="passwordConfirm">Conferma Password:</label>
+      
+      <p-password
+        formControlName="passwordConfirm"
+        [toggleMask]="true"
+        [feedback]="false"
+        [invalid]="checkFormControl('passwordConfirm') || staff.hasError('passwordMismatch')"
+        />
+      @if (checkFormControl('passwordConfirm') || staff.hasError('passwordMismatch')) {
+        @if (checkFormControlError('passwordConfirm', 'required')) {
+          <p-message severity="error" variant="simple">
+            Il campo conferma password è obbligatorio come scegliere una pessima startegia di gara se sei la Ferrari
+          </p-message>
+        }
+        @if (staff.hasError('passwordMismatch')) {
+          <p-message severity="error" variant="simple">
+            Le password non coincidono però anche tu impegnati
+          </p-message>
+        }
+      }
+    </div>
+    <div class="flex flex-col p-4">
+      <label for="role">Ruolo (non quello di calcio mi pare ovvio non è che hai un esterno tutta fascia perfetto nel 3-5-2 di Inzaghi che porta le medicine):</label>
+      <p-select
+      id="role"
+      [invalid] = "checkFormControl('role')"
+      [options] = "roleOptions"
+      formControlName = "role"
+      class="w-2xs"
+      optionLabel = "desc"
+      optionValue = "code"
+      />
+      
+      @if (checkFormControl('role')) {
+        @if (checkFormControlError('role', 'required')) {
+          <p-message severity="error" variant="simple">
+            Devi esserci un ruol ben definito dai, non è che puoi fare il tuttofare, non sei Manny
+          </p-message>
+        }
+      }
+    </div>
+    </p-fieldset>
+  </div>
+  <!--- tolti perchè fanno schifo ma tipo un sacco
+  <fieldset formGroupName="anagrafica"></fieldset>
+
+  <fieldset formGroupName="sanitaria"></fieldset>
+  -->
+  <div class="flex flex-row gap-4 pt-3 justify-center">
+  <p-button
+    label="Invia"
+    type="submit"
+  />
+  <p-button
+    (onClick)="staff.reset()"
+    label="Reset"
+    severity="warn"
+    variant="outlined"
+  />
+  </div>
+</form>

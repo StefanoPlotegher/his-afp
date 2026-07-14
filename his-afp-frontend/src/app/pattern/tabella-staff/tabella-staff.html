@@ -1,0 +1,22 @@
+<p>Tabella Staff</p>
+
+<p-button 
+    (onClick)="newStaff()"
+    label="Aggiungi Staff"
+/>
+
+<div
+class="flex flex-wrap flex-row gap-4 p-4">
+
+@for (st of StaffManager.orderedStaff(); track st.id){
+    <his-card-staff
+        [staff]="st"
+        [editMode]="editingStaffId() === st.id"
+        (edit)="this.editingStaffId.set($event)"
+        (close)="this.editingStaffId.set(null)"
+    />
+}@empty {
+    <h1>Nessuno staff presente in lista</h1>
+}
+
+</div>

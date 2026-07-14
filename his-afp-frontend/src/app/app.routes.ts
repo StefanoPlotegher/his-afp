@@ -1,8 +1,4 @@
 import { Routes } from '@angular/router';
-import { ListaPz } from './features/lista-pz/lista-pz';
-import { AccettazionePz } from './features/accettazione-pz/accettazione-pz';
-import { ModificaPz } from './features/modifica-pz/modifica-pz';
-import { StatoServizi } from './features/stato-servizi/stato-servizi';
 import { patientInfoResolver } from './core/Pazienti/resolver/patient-info-resolver';
 
 export const routes: Routes = [
@@ -14,6 +10,10 @@ export const routes: Routes = [
     {
         path: 'accettazione-pz',
         loadComponent: () => import('./features/accettazione-pz/accettazione-pz').then(m => m.AccettazionePz)
+    },
+    {
+        path: 'add-staff',
+        loadComponent: () => import('./features/add-staff/add-staff').then(m => m.addStaff)
     },
     {
         path: 'modifica-pz',
@@ -33,6 +33,10 @@ export const routes: Routes = [
     {
         path: 'stato-servizi',
         loadComponent: () => import('./features/stato-servizi/stato-servizi').then(m => m.StatoServizi)
+    },
+    {
+        path: 'staff',
+        loadComponent: () => import('./features/staff/staff').then(m => m.Staff)
     },
     {
         path: '',
