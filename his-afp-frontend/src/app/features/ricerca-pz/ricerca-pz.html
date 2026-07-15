@@ -1,0 +1,138 @@
+<form (submit)="onSubmit()" [formGroup]="ricerca">
+  <div class="flex flex-row flex-wrap gap-8 justify-center">
+    <p-fieldset legend="Ricerca Paziente" class="w-96">
+      <div class="flex flex-col p-4">
+        <label for="cf">Codice Fiscale:</label>
+        <input
+          id="cf"
+          formControlName="cf"
+          pInputText
+          type="text"
+          class="w-full"
+          [invalid]="checkFormControl('cf')"
+        />
+        @if (checkFormControl('cf')) {
+          @if (checkFormControlError('cf', 'required')) {
+            <p-message severity="error" variant="simple">
+              Il campo codice fiscale è obbligatorio
+            </p-message>
+          }
+          @if (checkFormControlError('cf', 'pattern')) {
+            <p-message severity="error" variant="simple">
+              Formato codice fiscale non valido
+            </p-message>
+          }
+        }
+      </div>
+
+      @if (searchMode() === 'advanced') {
+        <div class="flex flex-col p-4">
+          <label for="nome">Nome:</label>
+          <input
+            id="nome"
+            formControlName="nome"
+            pInputText
+            type="text"
+            class="w-full"
+            [invalid]="checkFormControl('nome')"
+          />
+          @if (checkFormControl('nome')) {
+            @if (checkFormControlError('nome', 'required')) {
+              <p-message severity="error" variant="simple">
+                Il campo nome è obbligatorio
+              </p-message>
+            }
+            @if (checkFormControlError('nome', 'minlength')) {
+              <p-message severity="error" variant="simple">
+                Il nome deve contenere almeno
+                {{ checkFormControlError('nome', 'minlength').requiredLength }} caratteri
+              </p-message>
+            }
+          }
+        </div>
+
+        <div class="flex flex-col p-4">
+          <label for="cognome">Cognome:</label>
+          <input
+            id="cognome"
+            formControlName="cognome"
+            pInputText
+            type="text"
+            class="w-full"
+            [invalid]="checkFormControl('cognome')"
+          />
+          @if (checkFormControl('cognome')) {
+            @if (checkFormControlError('cognome', 'required')) {
+              <p-message severity="error" variant="simple">
+                Il campo cognome è obbligatorio
+              </p-message>
+            }
+          }
+        </div>
+
+        <div class="flex flex-col p-4">
+          <label for="dataNascita">Data di Nascita:</label>
+          <p-date-picker
+            id="dataNascita"
+            formControlName="dataNascita"
+            type="date"
+            dateFormat="dd/mm/yy"
+            [maxDate]="maxDate"
+            placeholder="dd/mm/yyyy"
+            class="w-full"
+            [invalid]="checkFormControl('dataNascita')"
+          />
+          @if (checkFormControl('dataNascita')) {
+            @if (checkFormControlError('dataNascita', 'required')) {
+              <p-message severity="error" variant="simple">
+                Il campo data di nascita è obbligatorio
+              </p-message>
+            }
+          }
+        </div>
+      }
+
+      <div class="flex flex-col p-4">
+        <p-button
+          [label]="searchMode() === 'cf' ? 'Ricerca Avanzata (big up per te che sai tutte queste cose, tranne il codice fiscale quindi lame)' : 'Ricerca Base (lame)'"
+          (onClick)="toggleSearchMode()"
+          type="button"
+          variant="outlined"
+        />
+      </div>
+    </p-fieldset>
+  </div>
+
+  <div class="flex flex-row gap-4 pt-3 justify-center">
+    <p-button label="Cerca" type="submit" />
+    <p-button
+      label="Reset"
+      severity="warn"
+      variant="outlined"
+      (onClick)="resetForm()"
+    />
+  </div>
+</form>
+
+@if(pz().length > 0){
+<p-fieldset legend="Risultati Ricerca Paziente" class="w-96 ">
+  <div class="flex flex-col p-4 gap-4">
+    @for (paziente of this.pz(); track paziente.id) {
+      <div class="border-b pb-2 last:border-b-0">
+        <p>Codice Fiscale: {{ paziente.codice_fiscale }}</p>
+        <p>Nome: {{ paziente.nome }}</p>
+        <p>Cognome: {{ paziente.cognome }}</p>
+        <p>Data di Nascita: {{ paziente.data_nascita }}</p>
+      </div>
+      <p-button label="Usa per accettazione" (onClick)="usePatientForAdmission(paziente)" />
+    }
+  </div>
+</p-fieldset>
+}@else if (this.submitted()) {
+  <p-fieldset legend="Risultati Ricerca Paziente" class="w-96 justify-center">
+    <div class="flex flex-col p-4 gap-4">
+      <p>Non ci sono risultati per la ricerca effettuata</p>
+    </div>
+    <p-button label="Aggiungi Nuovo Paziente" (onClick)="addNewPatient()" />
+  </p-fieldset>
+}

@@ -2,7 +2,6 @@ import { inject, Injectable, signal } from '@angular/core';
 import { Anagrafica, PatientAdmission, PatientAdmissionRes, Paziente, PazienteDTO } from './Pazienti.model';
 import { HttpClient } from '@angular/common/http';
 import { APIResponse } from '../models/Response.model';
-import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -73,8 +72,31 @@ export class PatientManager {
     })
   }
 
-  public ricefcaPaziente(cf: string){
-    return this.#http.get<APIResponse<Anagrafica>>(`${environment.apiUrl}/patients/search?cf=${cf}`);
+  public ricercaCF(cf: string){
+    return this.#http.get<APIResponse<Anagrafica>>(`/api/patients/search?cf=${cf}`);
+  }  
+  
+  public ricefcaPaziente(
+    cf?: string | null,
+    nome?: string | null,
+    cognome?: string | null,
+    data_nascita?: string | null,
+    callback?: (pazienti: Anagrafica[]) => void
+  ): void {
+    let url = `/api/patients/search?`;
+    if (cf) url += `cf=${cf}`;
+    if (nome) url += `&nome=${nome}`;
+    if (cognome) url += `&cognome=${cognome}`;
+    if (data_nascita) url += `&data_nascita=${data_nascita}`;
+
+    this.#http.get<APIResponse<Anagrafica[]>>(url).subscribe({
+      next: (res) => {
+        callback?.(res.data ?? []);
+      },
+      error: (err) => {
+        console.error('Errore nella ricerca del paziente:', err);
+      }
+    });
   }
 
   //mapping da DTO a Paziente

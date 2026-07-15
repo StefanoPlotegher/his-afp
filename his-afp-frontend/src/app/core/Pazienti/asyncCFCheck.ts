@@ -10,7 +10,7 @@ export class AsyncCFCheck{
             }
 
             return timer(500).pipe(
-                switchMap(()=> pzManager.ricefcaPaziente(control.value)),
+                switchMap(()=> pzManager.ricercaCF(control.value)),
                 map((res) => (
                     res.results && res.results > 0 ? {cfExists: true} : null
                 )),
