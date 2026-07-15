@@ -36,6 +36,7 @@ export class RicercaPz {
     if (this.searchMode() === 'cf') {
       this.searchMode.set('advanced');
       this.ricerca.get('cf')?.disable();
+      this.ricerca.get('cf')?.reset();
       this.ricerca.get('nome')?.enable();
       this.ricerca.get('cognome')?.enable();
       this.ricerca.get('dataNascita')?.enable();
@@ -118,6 +119,31 @@ export class RicercaPz {
   }
 
   public addNewPatient() {
-    this.#router.navigate([`/accettazione-pz`]);
+    this.#router.navigate([`/accettazione-pz`], {
+      queryParams: { existing: false, ...this.buildSearchQueryParams() },
+    });
+  }
+
+  public usePatientForAdmission(paziente: Anagrafica) {
+    this.#router.navigate([`/accettazione-pz`], {
+      queryParams: { existing: true, patientId: paziente.id },
+    });
+  }
+
+    private buildSearchQueryParams() {
+    const cf = this.ricerca.get('cf')?.value;
+    const nome = this.ricerca.get('nome')?.value;
+    const cognome = this.ricerca.get('cognome')?.value;
+    const dataNascita = this.toLocalDateTimeString(this.ricerca.get('dataNascita')?.value);
+
+    if (cf) {
+      return { codiceFiscale: cf };
+    }
+
+    if (nome && cognome && dataNascita) {
+      return { nome, cognome, dataNascita };
+    }
+
+    return {};
   }
 }

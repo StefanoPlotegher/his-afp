@@ -124,7 +124,7 @@
         <p>Cognome: {{ paziente.cognome }}</p>
         <p>Data di Nascita: {{ paziente.data_nascita }}</p>
       </div>
-      <p-button label="Modifica il paziente" (onClick)="addNewPatient()" />
+      <p-button label="Usa per accettazione" (onClick)="usePatientForAdmission(paziente)" />
     }
   </div>
 </p-fieldset>
