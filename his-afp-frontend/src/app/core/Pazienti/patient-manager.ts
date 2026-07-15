@@ -81,7 +81,7 @@ export class PatientManager {
     nome?: string | null,
     cognome?: string | null,
     data_nascita?: string | null,
-    callback?: (pazienti: Anagrafica[] | null) => void
+    callback?: (pazienti: Anagrafica[]) => void
   ): void {
     let url = `/api/patients/search?`;
     if (cf) url += `cf=${cf}`;
@@ -95,7 +95,6 @@ export class PatientManager {
       },
       error: (err) => {
         console.error('Errore nella ricerca del paziente:', err);
-        callback?.(null);
       }
     });
   }

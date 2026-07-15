@@ -114,7 +114,8 @@
   </div>
 </form>
 
-<p-fieldset legend="Risultati Ricerca Paziente" class="w-96" [collapsed]="pz()?.length === 0">
+@if(pz().length > 0){
+<p-fieldset legend="Risultati Ricerca Paziente" class="w-96 ">
   <div class="flex flex-col p-4 gap-4">
     @for (paziente of this.pz(); track paziente.id) {
       <div class="border-b pb-2 last:border-b-0">
@@ -123,6 +124,15 @@
         <p>Cognome: {{ paziente.cognome }}</p>
         <p>Data di Nascita: {{ paziente.data_nascita }}</p>
       </div>
+      <p-button label="Modifica il paziente" (onClick)="addNewPatient()" />
     }
   </div>
 </p-fieldset>
+}@else if (this.submitted()) {
+  <p-fieldset legend="Risultati Ricerca Paziente" class="w-96 justify-center">
+    <div class="flex flex-col p-4 gap-4">
+      <p>Non ci sono risultati per la ricerca effettuata</p>
+    </div>
+    <p-button label="Aggiungi Nuovo Paziente" (onClick)="addNewPatient()" />
+  </p-fieldset>
+}

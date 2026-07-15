@@ -7,6 +7,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { FieldsetModule } from 'primeng/fieldset';
 import { PatientManager } from '../../core/Pazienti/patient-manager';
 import { Anagrafica } from '../../core/Pazienti/Pazienti.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'his-ricerca-pz',
@@ -15,12 +16,14 @@ import { Anagrafica } from '../../core/Pazienti/Pazienti.model';
   styleUrl: './ricerca-pz.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RicercaPz {
+export class RicercaPz { 
   readonly #fb = inject(FormBuilder);
   searchMode = signal<'cf' | 'advanced'>('cf');
   readonly maxDate = new Date();
   readonly patientManager = inject(PatientManager);
-  pz = signal<Anagrafica[] | null>(null);
+  pz = signal<Anagrafica[]>([]);
+  readonly #router = inject(Router);
+  submitted = signal(false);
 
   ricerca = this.#fb.group({
     cf: ['', [Validators.required, Validators.pattern('[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]')]],
@@ -82,7 +85,8 @@ export class RicercaPz {
       );
     }
     this.ricerca.reset();
-    this.pz.set(null);
+    this.pz.set([]);
+    this.submitted.set(false);
   }
 
   private toLocalDateTimeString(date?: Date | string | null): string {
@@ -107,8 +111,13 @@ export class RicercaPz {
           console.log('Pazienti trovati:', pazienti);
         }
       );
+      this.submitted.set(true);
     } else {
       this.ricerca.markAllAsTouched();
     }
+  }
+
+  public addNewPatient() {
+    this.#router.navigate([`/accettazione-pz`]);
   }
 }
