@@ -6,6 +6,7 @@ import { Message } from 'primeng/message';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FieldsetModule } from 'primeng/fieldset';
 import { PatientManager } from '../../core/Pazienti/patient-manager';
+import { Anagrafica } from '../../core/Pazienti/Pazienti.model';
 
 @Component({
   selector: 'his-ricerca-pz',
@@ -19,6 +20,7 @@ export class RicercaPz {
   searchMode = signal<'cf' | 'advanced'>('cf');
   readonly maxDate = new Date();
   readonly patientManager = inject(PatientManager);
+  pz = signal<Anagrafica[] | null>(null);
 
   ricerca = this.#fb.group({
     cf: ['', [Validators.required, Validators.pattern('[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]')]],
@@ -80,6 +82,7 @@ export class RicercaPz {
       );
     }
     this.ricerca.reset();
+    this.pz.set(null);
   }
 
   private toLocalDateTimeString(date?: Date | string | null): string {
@@ -94,12 +97,16 @@ export class RicercaPz {
 
   onSubmit() {
     if (this.ricerca.valid) {
-      console.log(this.patientManager.ricefcaPaziente(
+      this.patientManager.ricefcaPaziente(
         this.ricerca.get('cf')?.value,
         this.ricerca.get('nome')?.value,
         this.ricerca.get('cognome')?.value,
-        this.toLocalDateTimeString(this.ricerca.get('dataNascita')?.value)
-      ));
+        this.toLocalDateTimeString(this.ricerca.get('dataNascita')?.value),
+        (pazienti) => {
+          this.pz.set(pazienti);
+          console.log('Pazienti trovati:', pazienti);
+        }
+      );
     } else {
       this.ricerca.markAllAsTouched();
     }

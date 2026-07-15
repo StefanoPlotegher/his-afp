@@ -113,3 +113,16 @@
     />
   </div>
 </form>
+
+<p-fieldset legend="Risultati Ricerca Paziente" class="w-96" [collapsed]="pz()?.length === 0">
+  <div class="flex flex-col p-4 gap-4">
+    @for (paziente of this.pz(); track paziente.id) {
+      <div class="border-b pb-2 last:border-b-0">
+        <p>Codice Fiscale: {{ paziente.codice_fiscale }}</p>
+        <p>Nome: {{ paziente.nome }}</p>
+        <p>Cognome: {{ paziente.cognome }}</p>
+        <p>Data di Nascita: {{ paziente.data_nascita }}</p>
+      </div>
+    }
+  </div>
+</p-fieldset>
