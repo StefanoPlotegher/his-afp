@@ -74,3 +74,12 @@ export interface Anagrafica {
   provincia: string
   created_at: string
 }
+
+
+export interface Dimessi {
+  braccialetto: string,
+  nome: string,
+  cognome: string,
+  dataOraIngresso: string,
+  dataOraDimissione: string
+}

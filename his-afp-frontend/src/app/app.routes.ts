@@ -35,6 +35,10 @@ export const routes: Routes = [
         }
     },
     {
+        path: 'lista-dimessi',
+        loadComponent: () => import('./features/lista-dimessi/lista-dimessi').then(m => m.ListaDimessi)
+    },
+    {
         path: 'stato-servizi',
         loadComponent: () => import('./features/stato-servizi/stato-servizi').then(m => m.StatoServizi)
     },

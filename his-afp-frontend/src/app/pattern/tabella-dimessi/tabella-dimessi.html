@@ -1,0 +1,44 @@
+<p-button 
+    (onClick)="PatientManager.getDimessi()"
+    icon="pi pi-refresh"
+    [rounded]="true"
+    [text]="true"
+    severity="secondary"
+/>
+<p-toggleswitch
+    [(ngModel)]="enableRefresh"
+/>
+
+<p-table
+  [value]="PatientManager.dimessi()"
+  [rows]="10"
+  [paginator]="true"
+  sortField="dataOraDimissione"
+  [sortOrder]="-1"
+>
+  <ng-template #header>
+    <tr>
+      <th>Braccialetto</th>
+      <th>Nome</th>
+      <th>Cognome</th>
+      <th>Data/Ora Ingresso</th>
+      <th pSortableColumn="dataOraDimissione">
+        Data/Ora Dimissione <p-sortIcon field="dataOraDimissione" />
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-dimesso>
+    <tr>
+      <td>{{ dimesso.braccialetto }}</td>
+      <td>{{ dimesso.nome }}</td>
+      <td>{{ dimesso.cognome }}</td>
+      <td>{{ dimesso.dataOraIngresso | date : 'dd/MM/yyyy HH:mm' }}</td>
+      <td>{{ dimesso.dataOraDimissione | date : 'dd/MM/yyyy HH:mm' }}</td>
+    </tr>
+  </ng-template>
+  <ng-template #emptymessage>
+    <tr>
+      <td colspan="5">Nessun paziente dimesso nelle ultime 24 ore</td>
+    </tr>
+  </ng-template>
+</p-table>

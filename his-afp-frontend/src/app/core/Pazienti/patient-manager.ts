@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { Anagrafica, PatientAdmission, PatientAdmissionRes, Paziente, PazienteDTO } from './Pazienti.model';
+import { Anagrafica, Dimessi, PatientAdmission, PatientAdmissionRes, Paziente, PazienteDTO } from './Pazienti.model';
 import { HttpClient } from '@angular/common/http';
 import { APIResponse } from '../models/Response.model';
 import { Router } from '@angular/router';
@@ -13,8 +13,11 @@ export class PatientManager {
   #listaPZ = signal<Paziente[]>([]);
   #listaPzFiltered = signal<Paziente[]>(this.#listaPZ());
   listaPZ = this.#listaPzFiltered.asReadonly();
+  #dimessi = signal<Dimessi[]>([]);
+  dimessi = this.#dimessi.asReadonly();
 
-  timerID = signal(-1);
+  timerIDPz = signal(-1);
+  timerIDDim = signal(-1);
   //constructor(){
   //  this.fetchPazienti();
   //}
@@ -24,14 +27,25 @@ export class PatientManager {
    */
 
   public refreshPazienti(){
-    if (this.timerID() >= 0){return;}
+    if (this.timerIDPz() >= 0){return;}
     let id = setInterval(() => this.fetchPazienti(), 3000);
-    this.timerID.set(id);
+    this.timerIDPz.set(id);
+  }
+
+  public refreshDimessi(){
+    if (this.timerIDDim() >= 0){return;}
+    let id = setInterval(() => this.getDimessi(), 3000);
+    this.timerIDDim.set(id);
   }
 
   public stopRefreshPazienti(){
-    clearInterval(this.timerID());
-    this.timerID.set(-1);
+    clearInterval(this.timerIDPz());
+    this.timerIDPz.set(-1);
+  }
+
+  public stopRefreshDim(){
+    clearInterval(this.timerIDDim());
+    this.timerIDDim.set(-1);
   }
 
 
@@ -97,6 +111,18 @@ export class PatientManager {
         console.error('Errore nella ricerca del paziente:', err);
       }
     });
+  }
+
+  public getDimessi(){
+    this.#http.get<APIResponse<Dimessi[]>>(`/api/admissions/reports/discharged`).subscribe({
+      next: (res) => {
+        this.#dimessi.set(res.data);
+      },
+      error: (err) => {
+        console.error('Errore nel recupero dei dimessi:', err);
+      }
+    }
+    )
   }
 
   //mapping da DTO a Paziente
