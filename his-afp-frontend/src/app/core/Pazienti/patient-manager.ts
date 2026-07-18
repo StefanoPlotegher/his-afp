@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { Anagrafica, PatientAdmission, PatientAdmissionRes, Paziente, PazienteDTO } from './Pazienti.model';
+import { Anagrafica, Dimessi, PatientAdmission, PatientAdmissionRes, Paziente, PazienteDTO } from './Pazienti.model';
 import { HttpClient } from '@angular/common/http';
 import { APIResponse } from '../models/Response.model';
 import { environment } from '../../../environments/environment';
@@ -14,6 +14,8 @@ export class PatientManager {
   #listaPZ = signal<Paziente[]>([]);
   #listaPzFiltered = signal<Paziente[]>(this.#listaPZ());
   listaPZ = this.#listaPzFiltered.asReadonly();
+  #dimessi = signal<Dimessi[]>([]);
+  dimessi = this.#dimessi.asReadonly();
 
   timerID = signal(-1);
   //constructor(){
@@ -27,6 +29,12 @@ export class PatientManager {
   public refreshPazienti(){
     if (this.timerID() >= 0){return;}
     let id = setInterval(() => this.fetchPazienti(), 3000);
+    this.timerID.set(id);
+  }
+
+  public refreshDimessi(){
+    if (this.timerID() >= 0){return;}
+    let id = setInterval(() => this.getDimessi(), 3000);
     this.timerID.set(id);
   }
 
@@ -75,6 +83,18 @@ export class PatientManager {
 
   public ricefcaPaziente(cf: string){
     return this.#http.get<APIResponse<Anagrafica>>(`${environment.apiUrl}/patients/search?cf=${cf}`);
+  }
+
+  public getDimessi(){
+    this.#http.get<APIResponse<Dimessi[]>>(`/api/dimissioni`).subscribe({
+      next: (res) => {
+        this.#dimessi.set(res.data);
+      },
+      error: (err) => {
+        console.error('Errore nel recupero dei dimessi:', err);
+      }
+    }
+    )
   }
 
   //mapping da DTO a Paziente
