@@ -17,7 +17,8 @@ export class PatientManager {
   #dimessi = signal<Dimessi[]>([]);
   dimessi = this.#dimessi.asReadonly();
 
-  timerID = signal(-1);
+  timerIDPz = signal(-1);
+  timerIDDim = signal(-1);
   //constructor(){
   //  this.fetchPazienti();
   //}
@@ -27,20 +28,25 @@ export class PatientManager {
    */
 
   public refreshPazienti(){
-    if (this.timerID() >= 0){return;}
+    if (this.timerIDPz() >= 0){return;}
     let id = setInterval(() => this.fetchPazienti(), 3000);
-    this.timerID.set(id);
+    this.timerIDPz.set(id);
   }
 
   public refreshDimessi(){
-    if (this.timerID() >= 0){return;}
+    if (this.timerIDDim() >= 0){return;}
     let id = setInterval(() => this.getDimessi(), 3000);
-    this.timerID.set(id);
+    this.timerIDDim.set(id);
   }
 
   public stopRefreshPazienti(){
-    clearInterval(this.timerID());
-    this.timerID.set(-1);
+    clearInterval(this.timerIDPz());
+    this.timerIDPz.set(-1);
+  }
+
+  public stopRefreshDim(){
+    clearInterval(this.timerIDDim());
+    this.timerIDDim.set(-1);
   }
 
 
@@ -86,7 +92,7 @@ export class PatientManager {
   }
 
   public getDimessi(){
-    this.#http.get<APIResponse<Dimessi[]>>(`/api/dimissioni`).subscribe({
+    this.#http.get<APIResponse<Dimessi[]>>(`/api/admissions/reports/discharged`).subscribe({
       next: (res) => {
         this.#dimessi.set(res.data);
       },
