@@ -53,7 +53,8 @@ his-afp
 ├── docker-compose.yml
 ├── docs
 │   ├── API.md
-│   └── DATABASE.md
+│   ├── DATABASE.md
+│   └── MIGRAZIONE-RETE.md
 ├── LICENSE
 └── README.md
 ```
@@ -100,8 +101,11 @@ docker-compose up -d --build --no-deps backend
 
 # Accessi
 
-- **Backend API:** `http://localhost:3000`
-- **Database PostgreSQL:** `localhost:5432` (user: `sio_user`, password: `sio_password`, database: `sio_db`)
+- **Portale di Produzione:** `http://localhost:80`
+- **Portale di Sviluppo (SIO):** `http://localhost:8999`
+- **Portale di Test:** `http://localhost:8080`
+- **Backend API (tramite Gateway):** `http://localhost:80/api`
+- **Database PostgreSQL:** accessibile solo internamente dal backend sulla rete `backend-net` (non esposto all'host)
 
 # Test delle API
 
@@ -116,6 +120,7 @@ Allinterno della cartella `docs/` sono presenti documenti dettagliati riguardant
 
 - Documentazione delle API: [docs/API.md](docs/API.md)
 - Struttura del Database: [docs/DATABASE.md](docs/DATABASE.md)
+- Isolamento infrastrutturale: [docs/ISOLAMENTO-INFRASTRUTTURALE.md](docs/ISOLAMENTO-INFRASTRUTTURALE.md)
 
 # Contribuire
 
