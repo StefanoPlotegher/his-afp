@@ -89,6 +89,11 @@ export class AccettazionePz {
               codiceFiscale: codiceFiscale ?? '',
             },
           });
+          this.paziente.get('residenza.via')?.clearValidators();
+          this.paziente.get('residenza.civico')?.clearValidators();
+          this.paziente.get('residenza.comune')?.clearValidators();
+          this.paziente.get('residenza.provincia')?.clearValidators();
+          this.paziente.get('residenza')?.updateValueAndValidity();
         });
       }
     });
@@ -148,6 +153,8 @@ export class AccettazionePz {
   }
 
   onSubmit() {
+      console.log(this.paziente.valid);
+
     if (this.paziente.valid) {
       console.log(this.paziente.getRawValue());
       this.patientManager.admitPatient(

@@ -83,7 +83,7 @@
         <div class="flex flex-col p-4">
       <label for="codiceFiscale">codice Fiscale:</label>
       <input
-        [invalid]="checkFormControl('codiceFiscale')"
+        [invalid]="checkFormControl('anagrafica.codiceFiscale')"
         class="w-2xs"
         formControlName="codiceFiscale"
         id="codiceFiscale"
@@ -118,7 +118,7 @@
       <label for="sesso">Sesso(hahahahah che ridere non vedi come rido? e non pensare che puoi fare il fenomeno, o maschio o femmina e ti attacchi):</label>
       <p-select
       id="sesso"
-      [invalid] = "checkFormControl('sesso')"
+      [invalid] = "checkFormControl('anagrafica.sesso')"
       [options] = "sexOption"
       formControlName = "sesso"
       class="w-2xs"
