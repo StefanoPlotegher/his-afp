@@ -121,6 +121,7 @@ Allinterno della cartella `docs/` sono presenti documenti dettagliati riguardant
 - Documentazione delle API: [docs/API.md](docs/API.md)
 - Struttura del Database: [docs/DATABASE.md](docs/DATABASE.md)
 - Isolamento infrastrutturale: [docs/ISOLAMENTO-INFRASTRUTTURALE.md](docs/ISOLAMENTO-INFRASTRUTTURALE.md)
+- Isolamento infrastrutturale: [docs/BLUE-GREEN_STRATEGY.md](docs/BLUE-GREEN_STRATEGY.md)
 
 # Contribuire
 
