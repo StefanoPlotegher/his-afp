@@ -76,14 +76,14 @@ L'infrastruttura è stata suddivisa in **due reti Docker isolate** collegate esc
 ### 2.1 Definizione delle Reti
 
 | Rete            | Driver    | Internal | Servizi Collegati                         |
-
+|-----------------|-----------|----------|-------------------------------------------|
 | `frontend-net`  | `bridge`  | No       | `fe-prod`, `fe-test`, `fe-sio`, `gateway` |
 | `backend-net`   | `bridge`  | **Sì**   | `backend`, `db`, `gateway`                |
 
 ### 2.2 Assegnazione dei Servizi
 
 | Servizio  | Rete(i)                       | Porte esposte sull'host |
-
+|-----------|-------------------------------|-------------------------|
 | `db`      | `backend-net`                 | Nessuna                 |
 | `backend` | `backend-net`                 | Nessuna                 |
 | `fe-prod` | `frontend-net`                | Nessuna                 |
@@ -270,7 +270,7 @@ docker container ls --format "table {{.Names}}\t{{.Ports}}"
 ### 6.3 Riepilogo dei Test
 
 | #  | Test                            | Comando                                                     | Risultato Atteso   |
-
+|----|---------------------------------|-------------------------------------------------------------|--------------------|
 | 1  | Isolamento fe-prod → db         | `docker exec fe-prod ping db`                               | Fallimento         |
 | 2  | Isolamento fe-prod → backend    | `docker exec fe-prod ping sio-backend`                      | Fallimento         |
 | 3  | Connettività backend → db       | `docker exec sio-backend ping db`                           | Successo           |         
