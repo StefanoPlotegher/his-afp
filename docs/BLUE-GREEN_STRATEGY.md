@@ -7,6 +7,7 @@ Documentazione tecnica — Blue/Green deployment del Backend
 Vengono create due istanze del container backend, entrambe collegate allo stesso database, e un Gateway (nginx) che instrada il traffico verso una sola istanza alla volta.
 
 | Componente            | Ruolo                                                     |
+|-----------------------|-----------------------------------------------------------|
 | `sio-backend-blue`    | Versione stabile attualmente in produzione                |
 | `sio-backend-green`   | Nuova versione, avviata in parallelo per il test          |
 | `gateway` (nginx)     | Instrada le richieste `/api/` verso blue o green          |
