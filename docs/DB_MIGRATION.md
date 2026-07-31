@@ -104,8 +104,8 @@ Ora il db è aggiornato ed è interrogato sia da `backend-blue` che da `backend-
 | 4 | Blue continua a creare utenti | `curl -X POST http://localhost/api/users -d '{"username":"...","password":"...","role":"DOC"}'` | 201 Created, come prima |
 | 5 | Green espone il nuovo campo | `curl http://localhost:8080/api/users` | Lista utenti con campo `email` (null per i record esistenti) |
 | 6 | Green scrive l'email | `curl -X POST http://localhost:8080/api/users -d '{"username":"...","password":"...","role":"DOC","email":"test@his-afp.it"}'` | 201 Created, `email` valorizzata |
-| 7 | Switch del traffico prod a Green | `./switch.sh green` poi `curl http://localhost/api/users` | Nessuna interruzione, ora risponde Green |
-| 8 | Rollback e persistenza dati | `./switch.sh blue` poi verifica DB | L'utente creato al Test 6 resta nel database, invariato |
+| 7 | Switch del traffico prod a Green | Eseguire la [migrazione del backend](/docs/BLUE-GREEN_STRATEGY.md#31-switch-da-terminale) verso green poi `curl http://localhost/api/users` | Nessuna interruzione, ora risponde Green |
+| 8 | Rollback e persistenza dati | Eseguire la [migrazione del backend](/docs/BLUE-GREEN_STRATEGY.md#31-switch-da-terminale) verso blue poi verifica DB | L'utente creato al Test 6 resta nel database, invariato |
 
 
 ## 5. Considerazioni e implementazioni future
