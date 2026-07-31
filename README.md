@@ -123,6 +123,7 @@ Allinterno della cartella `docs/` sono presenti documenti dettagliati riguardant
 - Struttura del Database: [docs/DATABASE.md](docs/DATABASE.md)
 - Isolamento infrastrutturale: [docs/ISOLAMENTO-INFRASTRUTTURALE.md](docs/ISOLAMENTO-INFRASTRUTTURALE.md)
 - Blue-Green Strategy per backend: [docs/BLUE-GREEN_STRATEGY.md](docs/BLUE-GREEN_STRATEGY.md)
+- Migrazione DB: [docs/DB_MIGRATION.md](docs/DB_MIGRATION.md)
 
 # Contribuire
 
