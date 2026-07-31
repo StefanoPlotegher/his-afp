@@ -15,7 +15,7 @@ services:
       - backend-net
 
   backend-blue:
-    build: ./backend
+    build: ./backend-blue
     container_name: sio-backend-blue
     environment:
       DB_HOST: db
@@ -31,7 +31,7 @@ services:
       - backend-net
 
   backend-green:
-    build: ./backend
+    build: ./backend-green
     container_name: sio-backend-green
     environment:
       DB_HOST: db
