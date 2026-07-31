@@ -58,32 +58,23 @@ location /api/ {
     proxy_pass http://sio-backend-green:3000;
 }
 ```
-
+### 3.1 Switch da terminale
 La modifica viene resa effettiva ricaricando la configurazione di nginx senza fermare il servizio, così da non interrompere le connessioni in corso:
 
 ```bash
 docker compose exec gateway nginx -s reload
 ```
 
-## 4. Script di switch
-
-Per rendere la procedura ripetibile e dimostrabile, ho fatto uno script che automatizza il cambio di destinazione nel file di configurazione del gateway:
+È inoltre possibile eseguire i seguenti comandi per rendere la cosa un po' più veloce:
 
 ```bash
-#!/bin/bash
-# switch.sh blue|green
-TARGET=$1
-sed -i "s/proxy_pass http:\/\/sio-backend-.*:3000;/proxy_pass http:\/\/sio-backend-$TARGET:3000;/" ./default.conf
+sed -i "/listen $PORTA;/,/^}/s/proxy_pass http:\/\/sio-backend-.*:3000;/proxy_pass http:\/\/sio-backend-$VERSIONE:3000;/" ./gateway/default.conf
 docker compose exec gateway nginx -s reload
-echo "Switched to sio-backend-$TARGET"
 ```
 
-Utilizzo:
-
-```bash
-./switch.sh green   # passa il traffico a green
-./switch.sh blue     # rollback immediato a blue
-```
+dove:
+- $PORTA : serve per identificare quale versione del frontend subisce la migrazione del backend
+- $VERSIONE : `blue` o `green` per determinare quale versione del backend caricare
 
 ## 5. Procedura di test
 
@@ -113,14 +104,14 @@ Di seguito la sequenza di test consigliata per dimostrare il corretto funzioname
   ```bash
   watch -n 0.5 curl http://localhost/api/health
   ```
-- Eseguire `./switch.sh green` in un altro terminale.
+- Eseguire i [comandi per lo switch](#31-switch-da-terminale) in un altro terminale con `$PORTA = 80` e `$VERSIONE = green`. 
 - Verificare che il ciclo di richieste continui a ricevere risposte 200 OK senza errori né timeout durante e dopo il cambio.
 - Confermare nei log che le nuove richieste sono ora gestite da `sio-backend-green`.
 
 ### Test 5 — Rollback
 
 - Simulare un bug in green (es. arrestando il container o introducendo un errore volontario).
-- Eseguire `./switch.sh blue` e verificare che il traffico torni immediatamente e correttamente a blue, senza downtime percepito dal client.
+- Eseguire [comandi per lo switch](#31-switch-da-terminale) con `$PORTA = 80` e `$VERSIONE = blue` e verificare che il traffico torni immediatamente e correttamente a blue, senza downtime percepito dal client.
 - Verificare che il tempo di rollback sia dell'ordine di pochi secondi (tempo di reload di nginx), non di un riavvio completo dei container.
 
 ## 6. Riflessione richiesta: cosa succede ai dati durante il rollback?
